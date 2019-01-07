@@ -13,6 +13,8 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.commands.ProcessCamera;
+import frc.robot.commands.ViewCamera;
 import frc.robot.subsystems.Camera;
 
 /**
@@ -28,7 +30,7 @@ public class Robot extends TimedRobot {
   public static OI m_oi;
 
   Command m_autonomousCommand;
-  SendableChooser<Command> m_chooser = new SendableChooser<>();
+  SendableChooser<Command> m_visionChoice = new SendableChooser<>();
 
   /**
    * This function is run when the robot is first started up and should be
@@ -39,7 +41,9 @@ public class Robot extends TimedRobot {
     m_oi = new OI();
     //m_chooser.setDefaultOption("Default Auto", new ExampleCommand());
     // chooser.addOption("My Auto", new MyAutoCommand());
-    SmartDashboard.putData("Auto mode", m_chooser);
+    m_visionChoice.addOption("Processed", new ProcessCamera());
+    m_visionChoice.setDefaultOption("Default", new ViewCamera());
+    SmartDashboard.putData("Vision Option", m_visionChoice);
   }
 
   /**
@@ -61,6 +65,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void disabledInit() {
+    m_visionChoice.getSelected().start();
   }
 
   @Override
@@ -81,7 +86,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = m_chooser.getSelected();
+    m_visionChoice.getSelected().start();
+    //m_autonomousCommand = m_chooser.getSelected();
 
     /*
      * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -106,6 +112,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+    m_visionChoice.getSelected().start();
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
