@@ -22,7 +22,10 @@ public class OI {
   // Joystick stick = new Joystick(port);
   // Button button = new JoystickButton(stick, buttonNumber);
 
-  Joystick stick = new Joystick(0);
+  public Joystick stick = new Joystick(0);
+
+  public int moveAxis = 0;
+  public int rotateAxis = 1;
 
   // There are a few additional built in buttons you can use. Additionally,
   // by subclassing Button you can create custom triggers and bind those to

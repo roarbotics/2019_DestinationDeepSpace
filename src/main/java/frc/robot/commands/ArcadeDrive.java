@@ -8,12 +8,16 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.Robot;
 
 /**
  * An example command.  You can replace me with your own command.
  */
 public class ArcadeDrive extends Command {
+
+  DifferentialDrive drive;
+
   public ArcadeDrive() {
     // Use requires() here to declare subsystem dependencies
     requires(Robot.m_drivetrain);
@@ -22,11 +26,13 @@ public class ArcadeDrive extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    drive = new DifferentialDrive(Robot.m_drivetrain.leftMotor, Robot.m_drivetrain.rightMotor);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    drive.arcadeDrive(Robot.m_oi.stick.getRawAxis(Robot.m_oi.moveAxis), Robot.m_oi.stick.getRawAxis(Robot.m_oi.rotateAxis));
   }
 
   // Make this return true when this Command no longer needs to run execute()

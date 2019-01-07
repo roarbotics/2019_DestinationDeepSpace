@@ -19,8 +19,8 @@ public class Drivetrain extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
-  Talon leftMotor;
-  Talon rightMotor;
+  public Talon leftMotor;
+  public Talon rightMotor;
 
   public Drivetrain(){
     leftMotor = new Talon(RobotMap.leftMotor);
@@ -31,4 +31,5 @@ public class Drivetrain extends Subsystem {
   public void initDefaultCommand() {
     setDefaultCommand(new ArcadeDrive());
   }
+
 }
