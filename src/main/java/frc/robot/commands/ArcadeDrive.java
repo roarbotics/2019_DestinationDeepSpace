@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.Robot;
 
 /**
- * An example command.  You can replace me with your own command.
+ * An example command. You can replace me with your own command.
  */
 public class ArcadeDrive extends Command {
 
@@ -32,7 +32,8 @@ public class ArcadeDrive extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    drive.arcadeDrive(Robot.m_oi.stick.getRawAxis(Robot.m_oi.moveAxis), Robot.m_oi.stick.getRawAxis(Robot.m_oi.rotateAxis));
+    drive.arcadeDrive(Robot.m_oi.stick.getRawAxis(Robot.m_oi.moveAxis),
+        Robot.m_oi.stick.getRawAxis(Robot.m_oi.rotateAxis));
   }
 
   // Make this return true when this Command no longer needs to run execute()
