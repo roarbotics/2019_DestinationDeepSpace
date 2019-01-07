@@ -7,7 +7,10 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.RobotMap;
+import frc.robot.commands.ArcadeDrive;
 
 /**
  * An example subsystem.  You can replace me with your own Subsystem.
@@ -16,9 +19,16 @@ public class Drivetrain extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
+  Talon leftMotor;
+  Talon rightMotor;
+
+  public Drivetrain(){
+    leftMotor = new Talon(RobotMap.leftMotor);
+    rightMotor = new Talon(RobotMap.rightMotor);
+  }
+
   @Override
   public void initDefaultCommand() {
-    // Set the default command for a subsystem here.
-    // setDefaultCommand(new MySpecialCommand());
+    setDefaultCommand(new ArcadeDrive());
   }
 }
