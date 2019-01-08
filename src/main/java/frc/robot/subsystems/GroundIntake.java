@@ -27,8 +27,8 @@ public class GroundIntake extends Subsystem {
   public double speed = 1;
 
   public GroundIntake(){
-    left = new DoubleSolenoid(RobotMap.leftSolenoidIn, RobotMap.leftSolenoidOut);
-    right = new DoubleSolenoid(RobotMap.rightSolenoidIn, RobotMap.rightSolenoidOut);
+    left = new DoubleSolenoid(RobotMap.leftIntakeCylinderIn, RobotMap.leftIntakeCylinderOut);
+    right = new DoubleSolenoid(RobotMap.rightIntakeCylinderIn, RobotMap.rightIntakeCylinderOut);
 
     wheels = new Spark(RobotMap.intakeMotor);
 

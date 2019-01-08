@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.GroundIntake;
+import frc.robot.subsystems.Lift;
 import frc.robot.subsystems.Camera;
 import frc.robot.commands.ProcessCamera;
 import frc.robot.commands.ViewCamera;
@@ -29,6 +30,7 @@ public class Robot extends TimedRobot {
   public static Drivetrain m_drivetrain = new Drivetrain();
   public static GroundIntake m_groundintake = new GroundIntake();
   public static Camera m_camera = new Camera();
+  public static Lift m_lift = new Lift();
   public static OI m_oi;
 
 
