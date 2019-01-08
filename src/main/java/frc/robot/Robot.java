@@ -31,9 +31,9 @@ import frc.robot.commands.ViewCamera;
  */
 public class Robot extends TimedRobot {
   public static Drivetrain m_drivetrain = new Drivetrain();
-  //public static GroundIntake m_groundintake = new GroundIntake();
-  //public static Camera m_camera = new Camera();
-  //public static Lift m_lift = new Lift();
+  public static GroundIntake m_groundintake = new GroundIntake();
+  public static Camera m_camera = new Camera();
+  public static Lift m_lift = new Lift();
   public static OI m_oi;
 
   public static PowerDistributionPanel k_pdp = new PowerDistributionPanel();
