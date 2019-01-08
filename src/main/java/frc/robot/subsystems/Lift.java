@@ -7,7 +7,9 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.RobotMap;
 
 /**
  * An example subsystem.  You can replace me with your own Subsystem.
@@ -15,6 +17,14 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Lift extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
+
+  public Spark liftMotor;
+
+  public double speed = 1;
+
+  public Lift(){
+    liftMotor = new Spark(RobotMap.liftMotor);
+  }
 
   @Override
   public void initDefaultCommand() {
