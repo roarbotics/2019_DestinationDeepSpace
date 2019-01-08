@@ -7,6 +7,9 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -32,6 +35,16 @@ public class Robot extends TimedRobot {
   public static Camera m_camera = new Camera();
   public static Lift m_lift = new Lift();
   public static OI m_oi;
+
+  public static PowerDistributionPanel k_pdp = new PowerDistributionPanel();
+  public static Compressor k_compressor = new Compressor();
+
+
+  public static AnalogInput s_pressure = new AnalogInput(RobotMap.pressureSensor);
+
+  public double getPressure(){
+    return (250*(s_pressure.getVoltage()/5))-125;
+  }
 
 
   Command m_autonomousCommand;
@@ -61,6 +74,9 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+    SmartDashboard.putNumber("Stored Pressure", getPressure());
+    SmartDashboard.putNumber("Voltage", k_pdp.getVoltage());
+    SmartDashboard.putNumber("Total Current", k_pdp.getTotalCurrent());
   }
 
   /**
@@ -133,6 +149,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
+
   }
 
   /**

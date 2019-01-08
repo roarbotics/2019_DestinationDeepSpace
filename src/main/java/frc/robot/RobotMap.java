@@ -32,6 +32,8 @@ public class RobotMap {
 
   public static int liftMotor = 3;
 
+  public static int pressureSensor = 0;
+
   // If you are using multiple modules, make sure to define both the port
   // number and the module. For example you with a rangefinder:
   // public static int rangefinderPort = 1;
