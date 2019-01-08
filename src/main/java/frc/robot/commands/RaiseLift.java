@@ -29,13 +29,14 @@ public class RaiseLift extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.m_lift.liftMotor.set(Robot.m_lift.speed);
+    if (Robot.m_lift.upperLimit.get())
+      Robot.m_lift.liftMotor.set(Robot.m_lift.speed);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return Robot.m_lift.upperLimit.get();
   }
 
   // Called once after isFinished returns true

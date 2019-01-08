@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
@@ -22,8 +23,14 @@ public class Lift extends Subsystem {
 
   public double speed = 1;
 
+  public DigitalInput lowerLimit;
+  public DigitalInput upperLimit;
+
   public Lift(){
     liftMotor = new Spark(RobotMap.liftMotor);
+
+    lowerLimit = new DigitalInput(RobotMap.lowerLiftLimit);
+    upperLimit = new DigitalInput(RobotMap.upperLiftLimit);
   }
 
   @Override
