@@ -23,8 +23,8 @@ public class Drivetrain extends Subsystem {
   public Talon rightMotor;
 
   public Drivetrain(){
-    leftMotor = new Talon(RobotMap.leftMotor);
-    rightMotor = new Talon(RobotMap.rightMotor);
+    leftMotor = new Talon(RobotMap.leftDriveMotor);
+    rightMotor = new Talon(RobotMap.rightDriveMotor);
   }
 
   @Override
