@@ -33,10 +33,10 @@ public class OI {
   public int moveAxis = 0;
   public int rotateAxis = 1;
 
-  Button raiseIntake = new JoystickButton(stick, 0);
-  Button lowerIntake = new JoystickButton(stick, 1);
-  Button intakeForwards = new JoystickButton(stick, 2);
-  Button intakeReverse = new JoystickButton(stick, 3);
+  Button raiseIntake = new JoystickButton(stick, 1);
+  Button lowerIntake = new JoystickButton(stick, 2);
+  Button intakeForwards = new JoystickButton(stick, 3);
+  Button intakeReverse = new JoystickButton(stick, 4);
 
   public OI(){
     raiseIntake.whenPressed(new RaiseIntake());
