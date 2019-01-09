@@ -57,6 +57,9 @@ public class Robot extends TimedRobot {
   NetworkTableEntry yGyroEntry;
   NetworkTableEntry angleGyroEntry;
 
+  NetworkTableEntry leftEncoderEntry;
+  NetworkTableEntry rightEncoderEntry;
+
   ADXRS450_Gyro frcGyro;
   ADXL362 frcAccel;
 
@@ -96,6 +99,8 @@ public class Robot extends TimedRobot {
     xGyroEntry = table.getEntry("xGyro");
     yGyroEntry = table.getEntry("yGyro");
     angleGyroEntry = table.getEntry("angleGyro");
+    leftEncoderEntry = table.getEntry("leftEnc");
+    rightEncoderEntry = table.getEntry("rightEnc");
 
     // m_chooser.setDefaultOption("Default Auto", new ExampleCommand());
     // chooser.addOption("My Auto", new MyAutoCommand());
@@ -126,6 +131,9 @@ public class Robot extends TimedRobot {
     xGyroEntry.setDouble(frcAccel.getX());
     yGyroEntry.setDouble(frcAccel.getY());
     angleGyroEntry.setDouble(frcGyro.getAngle());
+
+    leftEncoderEntry.setDouble(m_drivetrain.leftEnc.getDistance());
+    rightEncoderEntry.setDouble(m_drivetrain.rightEnc.getDistance());
 
   }
 
