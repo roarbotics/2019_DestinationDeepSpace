@@ -10,7 +10,6 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
 import frc.robot.commands.ArcadeDrive;
@@ -22,27 +21,25 @@ public class Drivetrain extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
-  public WPI_TalonSRX leftMotor0;
+  public WPI_TalonSRX leftMotor;
   public WPI_TalonSRX leftMotor1;
 
-  public WPI_TalonSRX rightMotor0;
+  public WPI_TalonSRX rightMotor;
   public WPI_TalonSRX rightMotor1;
-
-  public SpeedControllerGroup leftMotor;
-  public SpeedControllerGroup rightMotor;
 
   public Encoder leftEnc;
   public Encoder rightEnc;
 
   public Drivetrain() {
-    leftMotor0 = new WPI_TalonSRX(RobotMap.leftDriveMotor0);
+    leftMotor = new WPI_TalonSRX(RobotMap.leftDriveMotor0);
     leftMotor1 = new WPI_TalonSRX(RobotMap.leftDriveMotor1);
+    leftMotor1.follow(leftMotor);
 
-    rightMotor0 = new WPI_TalonSRX(RobotMap.rightDriveMotor0);
+    rightMotor = new WPI_TalonSRX(RobotMap.rightDriveMotor0);
     rightMotor1 = new WPI_TalonSRX(RobotMap.rightDriveMotor1);
+    rightMotor1.follow(rightMotor);
 
-    leftMotor = new SpeedControllerGroup(leftMotor0, leftMotor1);
-    rightMotor = new SpeedControllerGroup(rightMotor0, rightMotor1);
+
 
     leftEnc = new Encoder(RobotMap.leftEncoder0, RobotMap.leftEncoder1, false, Encoder.EncodingType.k4X);
     rightEnc = new Encoder(RobotMap.rightEncoder0, RobotMap.rightEncoder1, false, Encoder.EncodingType.k4X);
