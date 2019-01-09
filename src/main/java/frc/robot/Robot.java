@@ -37,7 +37,7 @@ public class Robot extends TimedRobot {
   public static OI m_oi;
 
   public static PowerDistributionPanel k_pdp = new PowerDistributionPanel();
-  //public static Compressor k_compressor = new Compressor();
+  public static Compressor k_compressor = new Compressor();
 
 
   public static AnalogInput s_pressure = new AnalogInput(RobotMap.pressureSensor);
