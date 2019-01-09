@@ -15,6 +15,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.ADXL362;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
@@ -22,15 +23,14 @@ import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.commands.ProcessCamera;
+import frc.robot.commands.ViewCamera;
+import frc.robot.subsystems.Camera;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.GroundIntake;
 import frc.robot.subsystems.Lift;
-import frc.robot.subsystems.Camera;
-import frc.robot.commands.ProcessCamera;
-import frc.robot.commands.ViewCamera;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -45,9 +45,11 @@ public class Robot extends TimedRobot {
   public static Camera m_camera = new Camera();
   public static Lift m_lift = new Lift();
   public static OI m_oi;
-  public static AHRS ahrs;
 
-  public static Gyro gyro;
+  ADXRS450_Gyro frcGyro;
+  ADXL362 frcAccel;
+  AHRS ahrs;
+  BuiltInAccelerometer builtInAccelerometer;
 
   NetworkTableEntry xMXPEntry;
   NetworkTableEntry yMXPEntry;
@@ -57,11 +59,12 @@ public class Robot extends TimedRobot {
   NetworkTableEntry yGyroEntry;
   NetworkTableEntry angleGyroEntry;
 
+  NetworkTableEntry xRioEntry;
+  NetworkTableEntry yRioEntry;
+
   NetworkTableEntry leftEncoderEntry;
   NetworkTableEntry rightEncoderEntry;
 
-  ADXRS450_Gyro frcGyro;
-  ADXL362 frcAccel;
 
   public static PowerDistributionPanel k_pdp = new PowerDistributionPanel();
   public static Compressor k_compressor = new Compressor();
@@ -91,6 +94,9 @@ public class Robot extends TimedRobot {
 
     ahrs.resetDisplacement();
 
+    /**
+     * Set up the NetworkTable and map all of the keys to the table.
+     */
     NetworkTableInstance inst = NetworkTableInstance.getDefault();
     NetworkTable table = inst.getTable("datatable");
     yMXPEntry = table.getEntry("xMXP");
@@ -101,6 +107,8 @@ public class Robot extends TimedRobot {
     angleGyroEntry = table.getEntry("angleGyro");
     leftEncoderEntry = table.getEntry("leftEnc");
     rightEncoderEntry = table.getEntry("rightEnc");
+    xRioEntry = table.getEntry("xRio");
+    yRioEntry = table.getEntry("yRio");
 
     // m_chooser.setDefaultOption("Default Auto", new ExampleCommand());
     // chooser.addOption("My Auto", new MyAutoCommand());
@@ -124,6 +132,9 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Voltage", k_pdp.getVoltage());
     SmartDashboard.putNumber("Total Current", k_pdp.getTotalCurrent());
 
+    /**
+     * Add all of the data to the network table.
+     */
     xMXPEntry.setDouble(ahrs.getDisplacementX());
     yMXPEntry.setDouble(ahrs.getDisplacementY());
     angleMXPEntry.setDouble(ahrs.getAngle());
@@ -131,6 +142,9 @@ public class Robot extends TimedRobot {
     xGyroEntry.setDouble(frcAccel.getX());
     yGyroEntry.setDouble(frcAccel.getY());
     angleGyroEntry.setDouble(frcGyro.getAngle());
+
+    xRioEntry.setDouble(builtInAccelerometer.getX());
+    yRioEntry.setDouble(builtInAccelerometer.getY());
 
     leftEncoderEntry.setDouble(m_drivetrain.leftEnc.getDistance());
     rightEncoderEntry.setDouble(m_drivetrain.rightEnc.getDistance());
