@@ -9,13 +9,14 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
 import frc.robot.commands.ArcadeDrive;
 
 /**
- * An example subsystem.  You can replace me with your own Subsystem.
+ * An example subsystem. You can replace me with your own Subsystem.
  */
 public class Drivetrain extends Subsystem {
   // Put methods for controlling this subsystem
@@ -30,7 +31,10 @@ public class Drivetrain extends Subsystem {
   public SpeedControllerGroup leftMotor;
   public SpeedControllerGroup rightMotor;
 
-  public Drivetrain(){
+  public Encoder leftEnc;
+  public Encoder rightEnc;
+
+  public Drivetrain() {
     leftMotor0 = new WPI_TalonSRX(RobotMap.leftDriveMotor0);
     leftMotor1 = new WPI_TalonSRX(RobotMap.leftDriveMotor1);
 
@@ -39,6 +43,21 @@ public class Drivetrain extends Subsystem {
 
     leftMotor = new SpeedControllerGroup(leftMotor0, leftMotor1);
     rightMotor = new SpeedControllerGroup(rightMotor0, rightMotor1);
+
+    leftEnc = new Encoder(RobotMap.leftEncoder0, RobotMap.leftEncoder1, false, Encoder.EncodingType.k4X);
+    rightEnc = new Encoder(RobotMap.rightEncoder0, RobotMap.rightEncoder1, false, Encoder.EncodingType.k4X);
+
+    leftEnc.setMaxPeriod(.1);
+    leftEnc.setMinRate(10);
+    leftEnc.setDistancePerPulse(5);
+    leftEnc.setReverseDirection(true);
+    leftEnc.setSamplesToAverage(7);
+
+    rightEnc.setMaxPeriod(.1);
+    rightEnc.setMinRate(10);
+    rightEnc.setDistancePerPulse(5);
+    rightEnc.setReverseDirection(true);
+    rightEnc.setSamplesToAverage(7);
   }
 
   @Override

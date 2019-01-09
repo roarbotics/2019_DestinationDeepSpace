@@ -24,6 +24,13 @@ public class RobotMap {
   public static int rightDriveMotor0 = 2;
   public static int rightDriveMotor1 = 3;
 
+  public static int leftEncoder0;
+  public static int leftEncoder1;
+
+  public static int rightEncoder0;
+  public static int rightEncoder1;
+
+
 
   public static int intakeMotor = 2;
 
