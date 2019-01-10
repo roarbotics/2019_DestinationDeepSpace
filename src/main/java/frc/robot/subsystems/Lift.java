@@ -8,6 +8,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
@@ -26,11 +27,15 @@ public class Lift extends Subsystem {
   public DigitalInput lowerLimit;
   public DigitalInput upperLimit;
 
+  public Encoder liftEncoder;
+
   public Lift(){
     liftMotor = new Spark(RobotMap.liftMotor);
 
     lowerLimit = new DigitalInput(RobotMap.lowerLiftLimit);
     upperLimit = new DigitalInput(RobotMap.upperLiftLimit);
+
+    liftEncoder = new Encoder(RobotMap.liftEncoder0, RobotMap.liftEncoder1, false, Encoder.EncodingType.k4X);
   }
 
   @Override
