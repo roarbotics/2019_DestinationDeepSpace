@@ -7,40 +7,37 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.Robot;
 
 /**
  * An example command. You can replace me with your own command.
  */
-public class ArcadeDrive extends Command {
+public class LowerIntake extends Command {
 
-  DifferentialDrive drive;
-
-  public ArcadeDrive() {
+  public LowerIntake() {
     // Use requires() here to declare subsystem dependencies
-    requires(Robot.m_drivetrain);
+    requires(Robot.m_groundintake);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    //Robot.m_drivetrain.rightMotor.setInverted(true);
-    drive = new DifferentialDrive(Robot.m_drivetrain.leftMotor, Robot.m_drivetrain.rightMotor);
-    //drive.setRightSideInverted(true);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    drive.arcadeDrive(-Robot.m_oi.stick.getRawAxis(1), Robot.m_oi.stick.getRawAxis(2)/2);
+    Robot.m_groundintake.left.set(DoubleSolenoid.Value.kReverse);
+    Robot.m_groundintake.right.set(DoubleSolenoid.Value.kReverse);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return (Robot.m_groundintake.left.get().equals(DoubleSolenoid.Value.kReverse)
+        && Robot.m_groundintake.right.get().equals(DoubleSolenoid.Value.kReverse));
   }
 
   // Called once after isFinished returns true

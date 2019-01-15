@@ -8,44 +8,41 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.Robot;
 
 /**
  * An example command. You can replace me with your own command.
  */
-public class ArcadeDrive extends Command {
+public class LowerLift extends Command {
 
-  DifferentialDrive drive;
 
-  public ArcadeDrive() {
+  public LowerLift() {
     // Use requires() here to declare subsystem dependencies
-    requires(Robot.m_drivetrain);
+    requires(Robot.m_lift);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    //Robot.m_drivetrain.rightMotor.setInverted(true);
-    drive = new DifferentialDrive(Robot.m_drivetrain.leftMotor, Robot.m_drivetrain.rightMotor);
-    //drive.setRightSideInverted(true);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    drive.arcadeDrive(-Robot.m_oi.stick.getRawAxis(1), Robot.m_oi.stick.getRawAxis(2)/2);
+    if (Robot.m_lift.lowerLimit.get())
+      Robot.m_lift.liftMotor.set(-Robot.m_lift.speed);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return Robot.m_lift.lowerLimit.get();
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    Robot.m_lift.liftMotor.set(0);
   }
 
   // Called when another command which requires one or more of the same

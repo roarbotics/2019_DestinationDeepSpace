@@ -8,33 +8,28 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.Robot;
 
 /**
  * An example command. You can replace me with your own command.
  */
-public class ArcadeDrive extends Command {
+public class ReleaseIntake extends Command {
 
-  DifferentialDrive drive;
 
-  public ArcadeDrive() {
+  public ReleaseIntake() {
     // Use requires() here to declare subsystem dependencies
-    requires(Robot.m_drivetrain);
+    requires(Robot.m_groundintake);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    //Robot.m_drivetrain.rightMotor.setInverted(true);
-    drive = new DifferentialDrive(Robot.m_drivetrain.leftMotor, Robot.m_drivetrain.rightMotor);
-    //drive.setRightSideInverted(true);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    drive.arcadeDrive(-Robot.m_oi.stick.getRawAxis(1), Robot.m_oi.stick.getRawAxis(2)/2);
+    Robot.m_groundintake.wheels.set(-Robot.m_groundintake.speed);
   }
 
   // Make this return true when this Command no longer needs to run execute()
