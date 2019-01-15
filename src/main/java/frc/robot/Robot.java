@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
-import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -65,7 +65,6 @@ public class Robot extends TimedRobot {
   NetworkTableEntry leftEncoderEntry;
   NetworkTableEntry rightEncoderEntry;
 
-
   public static PowerDistributionPanel k_pdp = new PowerDistributionPanel();
   public static Compressor k_compressor = new Compressor();
 
@@ -78,14 +77,6 @@ public class Robot extends TimedRobot {
   Command m_autonomousCommand;
   SendableChooser<Command> m_visionChoice = new SendableChooser<>();
 
-public Robot(){
-  try {
-    ahrs = new AHRS(SPI.Port.kMXP);
-  } catch (RuntimeException e) {
-    DriverStation.reportError("MXP error: " + e.getMessage(), true);
-  }
-}
-
   /**
    * This function is run when the robot is first started up and should be used
    * for any initialization code.
@@ -93,6 +84,12 @@ public Robot(){
   @Override
   public void robotInit() {
     m_oi = new OI();
+
+    try {
+      ahrs = new AHRS(SerialPort.Port.kMXP);
+    } catch (RuntimeException e) {
+      DriverStation.reportError("MXP error: " + e.getMessage(), true);
+    }
 
     ahrs.resetDisplacement();
 
@@ -136,21 +133,30 @@ public Robot(){
 
     /**
      * Add all of the data to the network table.
-     
-    xMXPEntry.setDouble(ahrs.getDisplacementX());
-    yMXPEntry.setDouble(ahrs.getDisplacementY());
-    angleMXPEntry.setDouble(ahrs.getAngle());
+     */
 
-    xGyroEntry.setDouble(frcAccel.getX());
-    yGyroEntry.setDouble(frcAccel.getY());
-    angleGyroEntry.setDouble(frcGyro.getAngle());
+    if (ahrs != null) {
+      xMXPEntry.setDouble(ahrs.getDisplacementX());
+      yMXPEntry.setDouble(ahrs.getDisplacementY());
+      angleMXPEntry.setDouble(ahrs.getAngle());
+    }
 
-    xRioEntry.setDouble(builtInAccelerometer.getX());
-    yRioEntry.setDouble(builtInAccelerometer.getY());
+    if (frcAccel != null) {
+      xGyroEntry.setDouble(frcAccel.getX());
+      yGyroEntry.setDouble(frcAccel.getY());
+    }
+    if (frcGyro != null) {
+      angleGyroEntry.setDouble(frcGyro.getAngle());
+    }
+
+    if (builtInAccelerometer != null) {
+      xRioEntry.setDouble(builtInAccelerometer.getX());
+      yRioEntry.setDouble(builtInAccelerometer.getY());
+    }
 
     leftEncoderEntry.setDouble(m_drivetrain.leftEnc.getDistance());
     rightEncoderEntry.setDouble(m_drivetrain.rightEnc.getDistance());
-*/
+
   }
 
   /**
