@@ -26,15 +26,15 @@ public class ArcadeDrive extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.m_drivetrain.rightMotor.setInverted(true);
+    //Robot.m_drivetrain.rightMotor.setInverted(true);
     drive = new DifferentialDrive(Robot.m_drivetrain.leftMotor, Robot.m_drivetrain.rightMotor);
-    drive.setRightSideInverted(true);
+    //drive.setRightSideInverted(true);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    drive.arcadeDrive(-Robot.m_oi.stick.getRawAxis(1), Robot.m_oi.stick.getRawAxis(2));
+    drive.arcadeDrive(-Robot.m_oi.stick.getRawAxis(1), Robot.m_oi.stick.getRawAxis(2)/2);
   }
 
   // Make this return true when this Command no longer needs to run execute()
