@@ -78,6 +78,14 @@ public class Robot extends TimedRobot {
   Command m_autonomousCommand;
   SendableChooser<Command> m_visionChoice = new SendableChooser<>();
 
+public Robot(){
+  try {
+    ahrs = new AHRS(SPI.Port.kMXP);
+  } catch (RuntimeException e) {
+    DriverStation.reportError("MXP error: " + e.getMessage(), true);
+  }
+}
+
   /**
    * This function is run when the robot is first started up and should be used
    * for any initialization code.
@@ -85,12 +93,6 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     m_oi = new OI();
-
-    try {
-      ahrs = new AHRS(SPI.Port.kMXP);
-    } catch (RuntimeException e) {
-      DriverStation.reportError("MXP error: " + e.getMessage(), true);
-    }
 
     ahrs.resetDisplacement();
 
@@ -134,7 +136,7 @@ public class Robot extends TimedRobot {
 
     /**
      * Add all of the data to the network table.
-     */
+     
     xMXPEntry.setDouble(ahrs.getDisplacementX());
     yMXPEntry.setDouble(ahrs.getDisplacementY());
     angleMXPEntry.setDouble(ahrs.getAngle());
@@ -148,7 +150,7 @@ public class Robot extends TimedRobot {
 
     leftEncoderEntry.setDouble(m_drivetrain.leftEnc.getDistance());
     rightEncoderEntry.setDouble(m_drivetrain.rightEnc.getDistance());
-
+*/
   }
 
   /**
