@@ -32,10 +32,8 @@ public class RobotMap {
 
   public static int liftPot = 1;
 
-  public static int intakeMotor = 2;
-
-  public static int intakeCylinderIn = 0;
-  public static int intakeCylinderOut = 1;
+  public static int clawOpen = 0;
+  public static int clawClose = 1;
 
   public static int liftMotor = 3;
 

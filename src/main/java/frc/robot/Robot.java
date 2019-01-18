@@ -27,6 +27,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ProcessCamera;
 import frc.robot.commands.ViewCamera;
 import frc.robot.subsystems.Camera;
+import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Lift;
 
@@ -39,6 +40,7 @@ import frc.robot.subsystems.Lift;
  */
 public class Robot extends TimedRobot {
   public static Drivetrain m_drivetrain = new Drivetrain();
+  public static Claw m_claw = new Claw();
   public static Camera m_camera = new Camera();
   public static Lift m_lift = new Lift();
   public static OI m_oi;
@@ -64,10 +66,8 @@ public class Robot extends TimedRobot {
 
   public static PowerDistributionPanel k_pdp = new PowerDistributionPanel(5);
 
-  public static AnalogInput s_pressure = new AnalogInput(RobotMap.pressureSensor);
-
   public double getPressure() {
-    return (250 * (s_pressure.getVoltage() / 5)) - 125;
+    return (250 * (m_claw.s_pressure.getVoltage() / 5)) - 125;
   }
 
   Command m_autonomousCommand;
