@@ -16,10 +16,9 @@ import edu.wpi.first.wpilibj.ADXL362;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
-import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
-import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -65,8 +64,7 @@ public class Robot extends TimedRobot {
   NetworkTableEntry leftEncoderEntry;
   NetworkTableEntry rightEncoderEntry;
 
-  public static PowerDistributionPanel k_pdp = new PowerDistributionPanel();
-  public static Compressor k_compressor = new Compressor();
+  public static PowerDistributionPanel k_pdp = new PowerDistributionPanel(5);
 
   public static AnalogInput s_pressure = new AnalogInput(RobotMap.pressureSensor);
 
@@ -86,7 +84,7 @@ public class Robot extends TimedRobot {
     m_oi = new OI();
 
     try {
-      ahrs = new AHRS(SerialPort.Port.kMXP);
+      ahrs = new AHRS(SPI.Port.kMXP);
     } catch (RuntimeException e) {
       DriverStation.reportError("MXP error: " + e.getMessage(), true);
     }
@@ -98,7 +96,7 @@ public class Robot extends TimedRobot {
      */
     NetworkTableInstance inst = NetworkTableInstance.getDefault();
     NetworkTable table = inst.getTable("datatable");
-    yMXPEntry = table.getEntry("xMXP");
+    xMXPEntry = table.getEntry("xMXP");
     yMXPEntry = table.getEntry("yMXP");
     angleMXPEntry = table.getEntry("angleMXP");
     xGyroEntry = table.getEntry("xGyro");
@@ -114,6 +112,9 @@ public class Robot extends TimedRobot {
     m_visionChoice.addOption("Processed", new ProcessCamera());
     m_visionChoice.setDefaultOption("Default", new ViewCamera());
     SmartDashboard.putData("Vision Option", m_visionChoice);
+
+    System.out.println("MXP Firmware Version " + ahrs.getFirmwareVersion());
+    System.out.println("\n\nINIT COMPLETE\n\n");
   }
 
   /**
@@ -136,7 +137,7 @@ public class Robot extends TimedRobot {
      */
 
     if (ahrs != null) {
-      xMXPEntry.setDouble(ahrs.getDisplacementX());
+      xMXPEntry.setNumber(ahrs.getDisplacementX());
       yMXPEntry.setDouble(ahrs.getDisplacementY());
       angleMXPEntry.setDouble(ahrs.getAngle());
     }
