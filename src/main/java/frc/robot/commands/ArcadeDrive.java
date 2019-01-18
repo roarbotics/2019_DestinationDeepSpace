@@ -28,6 +28,7 @@ public class ArcadeDrive extends Command {
   protected void initialize() {
     //Robot.m_drivetrain.rightMotor.setInverted(true);
     drive = new DifferentialDrive(Robot.m_drivetrain.leftMotor, Robot.m_drivetrain.rightMotor);
+    drive.setSafetyEnabled(false);
     //drive.setRightSideInverted(true);
   }
 
