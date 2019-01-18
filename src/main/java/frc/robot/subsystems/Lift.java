@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import frc.robot.RobotMap;
 
 /**
@@ -27,7 +28,7 @@ public class Lift extends Subsystem {
   public DigitalInput lowerLimit;
   public DigitalInput upperLimit;
 
-  public Encoder liftEncoder;
+  public AnalogPotentiometer liftPot;
 
   public Lift(){
     liftMotor = new Spark(RobotMap.liftMotor);
@@ -35,7 +36,7 @@ public class Lift extends Subsystem {
     lowerLimit = new DigitalInput(RobotMap.lowerLiftLimit);
     upperLimit = new DigitalInput(RobotMap.upperLiftLimit);
 
-    liftEncoder = new Encoder(RobotMap.liftEncoder0, RobotMap.liftEncoder1, false, Encoder.EncodingType.k4X);
+    liftPot = new AnalogPotentiometer(RobotMap.liftPot);
   }
 
   @Override
