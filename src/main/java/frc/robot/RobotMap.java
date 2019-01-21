@@ -30,6 +30,8 @@ public class RobotMap {
   public static int rightEncoder0 = 2;
   public static int rightEncoder1 = 3;
 
+  public static int intakeMotor = 2;
+
   public static int liftPot = 1;
 
   public static int clawOpen = 0;
