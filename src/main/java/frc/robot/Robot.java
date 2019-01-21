@@ -161,7 +161,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void disabledInit() {
-    m_visionChoice.getSelected().start();
+    //m_visionChoice.getSelected().start();
   }
 
   @Override
