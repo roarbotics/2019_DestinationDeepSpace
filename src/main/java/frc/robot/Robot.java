@@ -25,7 +25,6 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ProcessCamera;
-import frc.robot.commands.ViewCamera;
 import frc.robot.subsystems.Camera;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.GroundIntake;
@@ -45,8 +44,8 @@ public class Robot extends TimedRobot {
   public static Lift m_lift = new Lift();
   public static OI m_oi;
 
-  ADXRS450_Gyro frcGyro;
-  ADXL362 frcAccel;
+  // ADXRS450_Gyro frcGyro;
+  // ADXL362 frcAccel;
   AHRS ahrs;
   BuiltInAccelerometer builtInAccelerometer;
 
@@ -83,6 +82,8 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     m_oi = new OI();
 
+    builtInAccelerometer = new BuiltInAccelerometer();
+
     try {
       ahrs = new AHRS(SPI.Port.kMXP);
     } catch (RuntimeException e) {
@@ -110,7 +111,7 @@ public class Robot extends TimedRobot {
     // m_chooser.setDefaultOption("Default Auto", new ExampleCommand());
     // chooser.addOption("My Auto", new MyAutoCommand());
     m_visionChoice.addOption("Processed", new ProcessCamera());
-    m_visionChoice.setDefaultOption("Default", new ViewCamera());
+    // m_visionChoice.setDefaultOption("Default", new ViewCamera());
     SmartDashboard.putData("Vision Option", m_visionChoice);
 
     System.out.println("MXP Firmware Version " + ahrs.getFirmwareVersion());
@@ -142,13 +143,11 @@ public class Robot extends TimedRobot {
       angleMXPEntry.setDouble(ahrs.getAngle());
     }
 
-    if (frcAccel != null) {
-      xGyroEntry.setDouble(frcAccel.getX());
-      yGyroEntry.setDouble(frcAccel.getY());
-    }
-    if (frcGyro != null) {
-      angleGyroEntry.setDouble(frcGyro.getAngle());
-    }
+    /*
+     * if (frcAccel != null) { xGyroEntry.setDouble(frcAccel.getX());
+     * yGyroEntry.setDouble(frcAccel.getY()); } if (frcGyro != null) {
+     * angleGyroEntry.setDouble(frcGyro.getAngle()); }
+     */
 
     if (builtInAccelerometer != null) {
       xRioEntry.setDouble(builtInAccelerometer.getX());
