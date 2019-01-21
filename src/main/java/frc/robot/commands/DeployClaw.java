@@ -14,11 +14,12 @@ import frc.robot.Robot;
 /**
  * An example command. You can replace me with your own command.
  */
-public class RaiseIntake extends Command {
+public class DeployClaw extends Command {
 
-  public RaiseIntake() {
+
+  public DeployClaw() {
     // Use requires() here to declare subsystem dependencies
-    requires(Robot.m_groundintake);
+    requires(Robot.m_claw);
   }
 
   // Called just before this Command runs the first time
@@ -29,15 +30,13 @@ public class RaiseIntake extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.m_groundintake.left.set(DoubleSolenoid.Value.kForward);
-    Robot.m_groundintake.right.set(DoubleSolenoid.Value.kForward);
+    Robot.m_claw.clawSolenoid.set(DoubleSolenoid.Value.kForward);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return (Robot.m_groundintake.left.get().equals(DoubleSolenoid.Value.kForward)
-        && Robot.m_groundintake.right.get().equals(DoubleSolenoid.Value.kForward));
+    return Robot.m_claw.clawSolenoid.get().equals(DoubleSolenoid.Value.kForward);
   }
 
   // Called once after isFinished returns true

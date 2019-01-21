@@ -7,31 +7,29 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
 
 /**
  * An example subsystem.  You can replace me with your own Subsystem.
  */
-public class GroundIntake extends Subsystem {
+public class Claw extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
-  public DoubleSolenoid left;
-  public DoubleSolenoid right;
+  public DoubleSolenoid clawSolenoid;
 
-  public Spark wheels;
+  public Compressor k_compressor;
 
-  public double speed = 1;
+  public AnalogInput s_pressure;
 
-  public GroundIntake(){
-    left = new DoubleSolenoid(RobotMap.leftIntakeCylinderIn, RobotMap.leftIntakeCylinderOut);
-    right = new DoubleSolenoid(RobotMap.rightIntakeCylinderIn, RobotMap.rightIntakeCylinderOut);
-
-    wheels = new Spark(RobotMap.intakeMotor);
-
+  public Claw(){
+    k_compressor = new Compressor();
+    s_pressure = new AnalogInput(RobotMap.pressureSensor);
+    clawSolenoid = new DoubleSolenoid(RobotMap.clawOpen, RobotMap.clawClose);
   }
 
   @Override

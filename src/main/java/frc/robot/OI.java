@@ -10,10 +10,6 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import frc.robot.commands.LowerIntake;
-import frc.robot.commands.RaiseIntake;
-import frc.robot.commands.ReleaseIntake;
-import frc.robot.commands.SuckIntake;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -39,11 +35,6 @@ public class OI {
   Button intakeReverse = new JoystickButton(stick, 4);
 
   public OI(){
-    raiseIntake.whenPressed(new RaiseIntake());
-    lowerIntake.whenPressed(new LowerIntake());
-
-    intakeForwards.whileHeld(new SuckIntake());
-    intakeReverse.whileHeld(new ReleaseIntake());
   }
 
 

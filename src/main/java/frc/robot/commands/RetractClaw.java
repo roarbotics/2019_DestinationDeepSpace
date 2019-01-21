@@ -7,18 +7,19 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
 /**
  * An example command. You can replace me with your own command.
  */
-public class SuckIntake extends Command {
+public class RetractClaw extends Command {
 
 
-  public SuckIntake() {
+  public RetractClaw() {
     // Use requires() here to declare subsystem dependencies
-    requires(Robot.m_groundintake);
+    requires(Robot.m_claw);
   }
 
   // Called just before this Command runs the first time
@@ -29,13 +30,13 @@ public class SuckIntake extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.m_groundintake.wheels.set(Robot.m_groundintake.speed);
+    Robot.m_claw.clawSolenoid.set(DoubleSolenoid.Value.kReverse);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return Robot.m_claw.clawSolenoid.get().equals(DoubleSolenoid.Value.kReverse);
   }
 
   // Called once after isFinished returns true
