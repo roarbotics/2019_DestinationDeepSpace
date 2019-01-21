@@ -31,10 +31,6 @@ public class Lift extends Subsystem {
 
   public Lift(){
     liftMotor = new Spark(RobotMap.liftMotor);
-
-    lowerLimit = new DigitalInput(RobotMap.lowerLiftLimit);
-    upperLimit = new DigitalInput(RobotMap.upperLiftLimit);
-
     liftPot = new AnalogPotentiometer(RobotMap.liftPot);
   }
 
