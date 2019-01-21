@@ -29,21 +29,8 @@ mEncoders:
   mHandle: 1
   mName: Encoder 1
   mType: com.snobot.simulator.module_wrapper.wpi.WpiEncoderWrapper
-mGyros:
-- mHandle: 0
-  mName: Analog Gyro
-  mType: com.snobot.simulator.module_wrapper.wpi.WpiAnalogGyroWrapper
-mPwm:
-- mHandle: 0
-  mMotorModelConfig: null
-  mMotorSimConfig: null
-  mName: Speed Controller 0
-  mType: com.snobot.simulator.module_wrapper.wpi.WpiPwmWrapper
-- mHandle: 1
-  mMotorModelConfig: null
-  mMotorSimConfig: null
-  mName: Speed Controller 1
-  mType: com.snobot.simulator.module_wrapper.wpi.WpiPwmWrapper
+mGyros: []
+mPwm: []
 mRelays: []
 mSimulatorComponents: []
 mSolenoids:
