@@ -2,9 +2,8 @@ plugins {
     //id "java"
     //id "edu.wpi.first.GradleRIO" version "2019.1.1"
     id "java"
-    id "edu.wpi.first.GradleRIO" version "2019.1.1"
+    id "edu.wpi.first.GradleRIO" version "2019.2.1"
     id "com.snobot.simulator.plugin.SnobotSimulatorPlugin" version "2019-0.2.0" apply false // Should point to the latest version at https://login.gradle.org/plugin/com.snobot.simulator.plugin.SnobotSimulatorPlugin
-
 }
 
 def ROBOT_MAIN_CLASS = "frc.robot.Main"
@@ -61,7 +60,7 @@ dependencies {
     nativeDesktopZip wpi.deps.vendor.jni(wpi.platforms.desktop)
     testCompile 'junit:junit:4.12'
 
-     snobotSimCompile snobotSimJava()
+    snobotSimCompile snobotSimJava()
 }
 
 // Setting up my Jar File. In this case, adding all libraries into the main jar ('fat jar')
