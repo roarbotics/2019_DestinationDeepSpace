@@ -183,7 +183,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    m_visionChoice.getSelected().start();
+    //m_visionChoice.getSelected().start();
     // m_autonomousCommand = m_chooser.getSelected();
 
     /*
@@ -209,7 +209,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    m_visionChoice.getSelected().start();
+    //m_visionChoice.getSelected().start();
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
