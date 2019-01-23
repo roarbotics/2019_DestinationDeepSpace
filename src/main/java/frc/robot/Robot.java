@@ -9,6 +9,7 @@ package frc.robot;
 
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -43,16 +44,10 @@ public class Robot extends TimedRobot {
 
   // ADXRS450_Gyro frcGyro;
   // ADXL362 frcAccel;
-  AHRS ahrs;
+  public static AHRS ahrs;
   BuiltInAccelerometer builtInAccelerometer;
 
-  NetworkTableEntry xMXPEntry;
-  NetworkTableEntry yMXPEntry;
   NetworkTableEntry angleMXPEntry;
-
-  NetworkTableEntry xGyroEntry;
-  NetworkTableEntry yGyroEntry;
-  NetworkTableEntry angleGyroEntry;
 
   NetworkTableEntry xRioEntry;
   NetworkTableEntry yRioEntry;
@@ -77,6 +72,8 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     m_oi = new OI();
 
+    CameraServer.getInstance().startAutomaticCapture();
+
     builtInAccelerometer = new BuiltInAccelerometer();
 
     try {
@@ -91,13 +88,9 @@ public class Robot extends TimedRobot {
      * Set up the NetworkTable and map all of the keys to the table.
      */
     NetworkTableInstance inst = NetworkTableInstance.getDefault();
+
     NetworkTable table = inst.getTable("datatable");
-    xMXPEntry = table.getEntry("xMXP");
-    yMXPEntry = table.getEntry("yMXP");
     angleMXPEntry = table.getEntry("angleMXP");
-    xGyroEntry = table.getEntry("xGyro");
-    yGyroEntry = table.getEntry("yGyro");
-    angleGyroEntry = table.getEntry("angleGyro");
     leftEncoderEntry = table.getEntry("leftEnc");
     rightEncoderEntry = table.getEntry("rightEnc");
     xRioEntry = table.getEntry("xRio");
@@ -105,7 +98,7 @@ public class Robot extends TimedRobot {
 
     // m_chooser.setDefaultOption("Default Auto", new ExampleCommand());
     // chooser.addOption("My Auto", new MyAutoCommand());
-    m_visionChoice.addOption("Processed", new ProcessCamera());
+    //m_visionChoice.addOption("Processed", new ProcessCamera());
     // m_visionChoice.setDefaultOption("Default", new ViewCamera());
     SmartDashboard.putData("Vision Option", m_visionChoice);
 
@@ -133,8 +126,6 @@ public class Robot extends TimedRobot {
      */
 
     if (ahrs != null) {
-      xMXPEntry.setNumber(ahrs.getDisplacementX());
-      yMXPEntry.setDouble(ahrs.getDisplacementY());
       angleMXPEntry.setDouble(ahrs.getAngle());
     }
 
@@ -161,7 +152,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void disabledInit() {
-    m_visionChoice.getSelected().start();
+    //m_visionChoice.getSelected().start();
   }
 
   @Override
@@ -183,7 +174,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    m_visionChoice.getSelected().start();
+    //m_visionChoice.getSelected().start();
     // m_autonomousCommand = m_chooser.getSelected();
 
     /*
@@ -209,7 +200,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    m_visionChoice.getSelected().start();
+    //m_visionChoice.getSelected().start();
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
