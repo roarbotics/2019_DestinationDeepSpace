@@ -9,6 +9,7 @@ package frc.robot;
 
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -22,7 +23,6 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.commands.ProcessCamera;
 import frc.robot.subsystems.Camera;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Drivetrain;
@@ -42,8 +42,6 @@ public class Robot extends TimedRobot {
   public static Lift m_lift = new Lift();
   public static OI m_oi;
 
-  // ADXRS450_Gyro frcGyro;
-  // ADXL362 frcAccel;
   public static AHRS ahrs;
   BuiltInAccelerometer builtInAccelerometer;
 
@@ -72,7 +70,11 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     m_oi = new OI();
 
-    CameraServer.getInstance().startAutomaticCapture();
+    UsbCamera camera = new UsbCamera("cam0",0);
+    camera.setFPS(15);
+    camera.setResolution(320, 240);
+
+    CameraServer.getInstance().startAutomaticCapture(camera);
 
     builtInAccelerometer = new BuiltInAccelerometer();
 
