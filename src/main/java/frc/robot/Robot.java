@@ -7,17 +7,26 @@
 
 package frc.robot;
 
+import com.kauailabs.navx.frc.AHRS;
+
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.BuiltInAccelerometer;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.GroundIntake;
-import frc.robot.subsystems.Lift;
 import frc.robot.subsystems.Camera;
-import frc.robot.commands.ProcessCamera;
-import frc.robot.commands.ViewCamera;
+import frc.robot.subsystems.Claw;
+import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Lift;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -28,49 +37,124 @@ import frc.robot.commands.ViewCamera;
  */
 public class Robot extends TimedRobot {
   public static Drivetrain m_drivetrain = new Drivetrain();
-  public static GroundIntake m_groundintake = new GroundIntake();
+  public static Claw m_claw = new Claw();
   public static Camera m_camera = new Camera();
   public static Lift m_lift = new Lift();
   public static OI m_oi;
 
+  public static AHRS ahrs;
+  BuiltInAccelerometer builtInAccelerometer;
+
+  NetworkTableEntry angleMXPEntry;
+
+  NetworkTableEntry xRioEntry;
+  NetworkTableEntry yRioEntry;
+
+  NetworkTableEntry leftEncoderEntry;
+  NetworkTableEntry rightEncoderEntry;
+
+  public static PowerDistributionPanel k_pdp = new PowerDistributionPanel(5);
+
+  public double getPressure() {
+    return (250 * (m_claw.s_pressure.getVoltage() / 5)) - 125;
+  }
 
   Command m_autonomousCommand;
   SendableChooser<Command> m_visionChoice = new SendableChooser<>();
 
   /**
-   * This function is run when the robot is first started up and should be
-   * used for any initialization code.
+   * This function is run when the robot is first started up and should be used
+   * for any initialization code.
    */
   @Override
   public void robotInit() {
     m_oi = new OI();
-    //m_chooser.setDefaultOption("Default Auto", new ExampleCommand());
+
+    UsbCamera camera = new UsbCamera("cam0",0);
+    camera.setFPS(15);
+    camera.setResolution(320, 240);
+
+    CameraServer.getInstance().startAutomaticCapture(camera);
+
+    builtInAccelerometer = new BuiltInAccelerometer();
+
+    try {
+      ahrs = new AHRS(SPI.Port.kMXP);
+    } catch (RuntimeException e) {
+      DriverStation.reportError("MXP error: " + e.getMessage(), true);
+    }
+
+    ahrs.resetDisplacement();
+
+    /**
+     * Set up the NetworkTable and map all of the keys to the table.
+     */
+    NetworkTableInstance inst = NetworkTableInstance.getDefault();
+
+    NetworkTable table = inst.getTable("datatable");
+    angleMXPEntry = table.getEntry("angleMXP");
+    leftEncoderEntry = table.getEntry("leftEnc");
+    rightEncoderEntry = table.getEntry("rightEnc");
+    xRioEntry = table.getEntry("xRio");
+    yRioEntry = table.getEntry("yRio");
+
+    // m_chooser.setDefaultOption("Default Auto", new ExampleCommand());
     // chooser.addOption("My Auto", new MyAutoCommand());
-    m_visionChoice.addOption("Processed", new ProcessCamera());
-    m_visionChoice.setDefaultOption("Default", new ViewCamera());
+    //m_visionChoice.addOption("Processed", new ProcessCamera());
+    // m_visionChoice.setDefaultOption("Default", new ViewCamera());
     SmartDashboard.putData("Vision Option", m_visionChoice);
+
+    System.out.println("MXP Firmware Version " + ahrs.getFirmwareVersion());
+    System.out.println("\n\nINIT COMPLETE\n\n");
   }
 
   /**
-   * This function is called every robot packet, no matter the mode. Use
-   * this for items like diagnostics that you want ran during disabled,
-   * autonomous, teleoperated and test.
+   * This function is called every robot packet, no matter the mode. Use this for
+   * items like diagnostics that you want ran during disabled, autonomous,
+   * teleoperated and test.
    *
-   * <p>This runs after the mode specific periodic functions, but before
-   * LiveWindow and SmartDashboard integrated updating.
+   * <p>
+   * This runs after the mode specific periodic functions, but before LiveWindow
+   * and SmartDashboard integrated updating.
    */
   @Override
   public void robotPeriodic() {
+    // SmartDashboard.putNumber("Stored Pressure", getPressure());
+    SmartDashboard.putNumber("Voltage", k_pdp.getVoltage());
+    SmartDashboard.putNumber("Total Current", k_pdp.getTotalCurrent());
+
+    /**
+     * Add all of the data to the network table.
+     */
+
+    if (ahrs != null) {
+      angleMXPEntry.setDouble(ahrs.getAngle());
+    }
+
+    /*
+     * if (frcAccel != null) { xGyroEntry.setDouble(frcAccel.getX());
+     * yGyroEntry.setDouble(frcAccel.getY()); } if (frcGyro != null) {
+     * angleGyroEntry.setDouble(frcGyro.getAngle()); }
+     */
+
+    if (builtInAccelerometer != null) {
+      xRioEntry.setDouble(builtInAccelerometer.getX());
+      yRioEntry.setDouble(builtInAccelerometer.getY());
+    }
+
+    leftEncoderEntry.setDouble(m_drivetrain.leftEnc.getDistance());
+    rightEncoderEntry.setDouble(m_drivetrain.rightEnc.getDistance());
+
   }
 
   /**
-   * This function is called once each time the robot enters Disabled mode.
-   * You can use it to reset any subsystem information you want to clear when
-   * the robot is disabled.
+   * This function is called once each time the robot enters Disabled mode. You
+   * can use it to reset any subsystem information you want to clear when the
+   * robot is disabled.
    */
   @Override
   public void disabledInit() {
-    m_visionChoice.getSelected().start();
+    //m_visionChoice.getSelected().start();
   }
 
   @Override
@@ -80,25 +164,26 @@ public class Robot extends TimedRobot {
 
   /**
    * This autonomous (along with the chooser code above) shows how to select
-   * between different autonomous modes using the dashboard. The sendable
-   * chooser code works with the Java SmartDashboard. If you prefer the
-   * LabVIEW Dashboard, remove all of the chooser code and uncomment the
-   * getString code to get the auto name from the text box below the Gyro
+   * between different autonomous modes using the dashboard. The sendable chooser
+   * code works with the Java SmartDashboard. If you prefer the LabVIEW Dashboard,
+   * remove all of the chooser code and uncomment the getString code to get the
+   * auto name from the text box below the Gyro
    *
-   * <p>You can add additional auto modes by adding additional commands to the
-   * chooser code above (like the commented example) or additional comparisons
-   * to the switch structure below with additional strings & commands.
+   * <p>
+   * You can add additional auto modes by adding additional commands to the
+   * chooser code above (like the commented example) or additional comparisons to
+   * the switch structure below with additional strings & commands.
    */
   @Override
   public void autonomousInit() {
-    m_visionChoice.getSelected().start();
-    //m_autonomousCommand = m_chooser.getSelected();
+    //m_visionChoice.getSelected().start();
+    // m_autonomousCommand = m_chooser.getSelected();
 
     /*
-     * String autoSelected = SmartDashboard.getString("Auto Selector",
-     * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
-     * = new MyAutoCommand(); break; case "Default Auto": default:
-     * autonomousCommand = new ExampleCommand(); break; }
+     * String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
+     * switch(autoSelected) { case "My Auto": autonomousCommand = new
+     * MyAutoCommand(); break; case "Default Auto": default: autonomousCommand = new
+     * ExampleCommand(); break; }
      */
 
     // schedule the autonomous command (example)
@@ -117,7 +202,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    m_visionChoice.getSelected().start();
+    //m_visionChoice.getSelected().start();
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
@@ -133,6 +218,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
+
   }
 
   /**

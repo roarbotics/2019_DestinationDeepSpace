@@ -8,6 +8,10 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import frc.robot.commands.DeployClaw;
+import frc.robot.commands.RetractClaw;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -26,6 +30,15 @@ public class OI {
 
   public int moveAxis = 0;
   public int rotateAxis = 1;
+
+  Button deployClaw = new JoystickButton(stick, 1);
+  Button retractClaw = new JoystickButton(stick, 2);
+
+  public OI(){
+    deployClaw.whenPressed(new DeployClaw());
+    retractClaw.whenPressed(new RetractClaw());
+  }
+
 
   // There are a few additional built in buttons you can use. Additionally,
   // by subclassing Button you can create custom triggers and bind those to
@@ -46,4 +59,5 @@ public class OI {
   // Start the command when the button is released and let it run the command
   // until it is finished as determined by it's isFinished method.
   // button.whenReleased(new ExampleCommand());
+
 }

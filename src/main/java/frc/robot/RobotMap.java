@@ -19,18 +19,30 @@ public class RobotMap {
   // public static int leftMotor = 1;
   // public static int rightMotor = 2;
 
-  public static int leftDriveMotor = 0;
-  public static int rightDriveMotor = 1;
+
+  // CAN Motors
+  public static int leftDriveMotor0 = 1;
+  public static int leftDriveMotor1 = 3;
+  public static int rightDriveMotor0 = 0;
+  public static int rightDriveMotor1 = 2;
+
+  public static int liftMotor = 4;
+
+  // Digital Inputs
+  public static int leftEncoder0 = 0;
+  public static int leftEncoder1 = 1;
+
+  public static int rightEncoder0 = 2;
+  public static int rightEncoder1 = 3;
 
 
-  public static int intakeMotor = 2;
+  // Analog Inputs
+  public static int pressureSensor = 0;
+  public static int liftPot = 1;
 
-  public static int leftIntakeCylinderIn = 0;
-  public static int leftIntakeCylinderOut = 1;
-  public static int rightIntakeCylinderIn = 2;
-  public static int rightIntakeCylinderOut = 3;
-
-  public static int liftMotor = 3;
+  // PCM Ports
+  public static int clawOpen = 0;
+  public static int clawClose = 1;
 
   // If you are using multiple modules, make sure to define both the port
   // number and the module. For example you with a rangefinder:

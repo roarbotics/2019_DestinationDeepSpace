@@ -7,8 +7,10 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import frc.robot.RobotMap;
 
 /**
@@ -22,8 +24,14 @@ public class Lift extends Subsystem {
 
   public double speed = 1;
 
+  public DigitalInput lowerLimit;
+  public DigitalInput upperLimit;
+
+  public AnalogPotentiometer liftPot;
+
   public Lift(){
     liftMotor = new Spark(RobotMap.liftMotor);
+    liftPot = new AnalogPotentiometer(RobotMap.liftPot);
   }
 
   @Override
