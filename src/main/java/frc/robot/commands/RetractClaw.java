@@ -32,6 +32,7 @@ public class RetractClaw extends Command {
   protected void execute() {
     System.out.println("Retracting Claw");
     Robot.m_claw.clawSolenoid.set(DoubleSolenoid.Value.kReverse);
+    System.out.println("Retract Claw");
   }
 
   // Make this return true when this Command no longer needs to run execute()

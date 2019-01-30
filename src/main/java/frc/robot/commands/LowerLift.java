@@ -36,7 +36,8 @@ public class LowerLift extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return Robot.m_lift.lowerLimit.get();
+    //return Robot.m_lift.lowerLimit.get();
+    return Robot.m_lift.liftPot.get() < Robot.m_lift.lowPot;
   }
 
   // Called once after isFinished returns true

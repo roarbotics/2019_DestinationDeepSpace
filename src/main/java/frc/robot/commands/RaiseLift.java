@@ -36,7 +36,7 @@ public class RaiseLift extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return Robot.m_lift.upperLimit.get();
+    return Robot.m_lift.liftPot.get() > Robot.m_lift.highPot;
   }
 
   // Called once after isFinished returns true

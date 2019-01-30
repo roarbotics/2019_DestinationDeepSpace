@@ -24,6 +24,9 @@ public class Lift extends Subsystem {
 
   public double speed = 1;
 
+  public double lowPot = 10;
+  public double highPot = 245;
+
   public DigitalInput lowerLimit;
   public DigitalInput upperLimit;
 

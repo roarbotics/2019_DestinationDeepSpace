@@ -9,6 +9,8 @@ package frc.robot;
 
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -21,7 +23,6 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.commands.ProcessCamera;
 import frc.robot.subsystems.Camera;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Drivetrain;
@@ -41,18 +42,10 @@ public class Robot extends TimedRobot {
   public static Lift m_lift = new Lift();
   public static OI m_oi;
 
-  // ADXRS450_Gyro frcGyro;
-  // ADXL362 frcAccel;
-  AHRS ahrs;
+  public static AHRS ahrs;
   BuiltInAccelerometer builtInAccelerometer;
 
-  NetworkTableEntry xMXPEntry;
-  NetworkTableEntry yMXPEntry;
   NetworkTableEntry angleMXPEntry;
-
-  NetworkTableEntry xGyroEntry;
-  NetworkTableEntry yGyroEntry;
-  NetworkTableEntry angleGyroEntry;
 
   NetworkTableEntry xRioEntry;
   NetworkTableEntry yRioEntry;
@@ -77,6 +70,12 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     m_oi = new OI();
 
+    UsbCamera camera = new UsbCamera("cam0",0);
+    camera.setFPS(15);
+    camera.setResolution(320, 240);
+
+    CameraServer.getInstance().startAutomaticCapture(camera);
+
     builtInAccelerometer = new BuiltInAccelerometer();
 
     try {
@@ -91,13 +90,9 @@ public class Robot extends TimedRobot {
      * Set up the NetworkTable and map all of the keys to the table.
      */
     NetworkTableInstance inst = NetworkTableInstance.getDefault();
+
     NetworkTable table = inst.getTable("datatable");
-    xMXPEntry = table.getEntry("xMXP");
-    yMXPEntry = table.getEntry("yMXP");
     angleMXPEntry = table.getEntry("angleMXP");
-    xGyroEntry = table.getEntry("xGyro");
-    yGyroEntry = table.getEntry("yGyro");
-    angleGyroEntry = table.getEntry("angleGyro");
     leftEncoderEntry = table.getEntry("leftEnc");
     rightEncoderEntry = table.getEntry("rightEnc");
     xRioEntry = table.getEntry("xRio");
@@ -105,7 +100,7 @@ public class Robot extends TimedRobot {
 
     // m_chooser.setDefaultOption("Default Auto", new ExampleCommand());
     // chooser.addOption("My Auto", new MyAutoCommand());
-    m_visionChoice.addOption("Processed", new ProcessCamera());
+    //m_visionChoice.addOption("Processed", new ProcessCamera());
     // m_visionChoice.setDefaultOption("Default", new ViewCamera());
     SmartDashboard.putData("Vision Option", m_visionChoice);
 
@@ -133,8 +128,6 @@ public class Robot extends TimedRobot {
      */
 
     if (ahrs != null) {
-      xMXPEntry.setNumber(ahrs.getDisplacementX());
-      yMXPEntry.setDouble(ahrs.getDisplacementY());
       angleMXPEntry.setDouble(ahrs.getAngle());
     }
 
