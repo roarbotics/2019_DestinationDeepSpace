@@ -30,6 +30,7 @@ public class RetractClaw extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    System.out.println("Retracting Claw");
     Robot.m_claw.clawSolenoid.set(DoubleSolenoid.Value.kReverse);
   }
 
