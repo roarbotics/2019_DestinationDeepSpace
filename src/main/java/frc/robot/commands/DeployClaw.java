@@ -32,7 +32,6 @@ public class DeployClaw extends Command {
   protected void execute() {
     System.out.println("Deploying claw");
     Robot.m_claw.clawSolenoid.set(DoubleSolenoid.Value.kForward);
-    System.out.println("Deploy Claw");
   }
 
   // Make this return true when this Command no longer needs to run execute()
