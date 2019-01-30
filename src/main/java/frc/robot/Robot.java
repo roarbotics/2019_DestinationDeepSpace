@@ -23,7 +23,6 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ArcadeDrive;
-import frc.robot.subsystems.Camera;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Lift;
@@ -38,7 +37,6 @@ import frc.robot.subsystems.Lift;
 public class Robot extends TimedRobot {
   public static Drivetrain m_drivetrain = new Drivetrain();
   public static Claw m_claw = new Claw();
-  public static Camera m_camera = new Camera();
   public static Lift m_lift = new Lift();
   public static OI m_oi;
 

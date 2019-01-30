@@ -31,8 +31,12 @@ public class OI {
   public int moveAxis = 1;
   public int rotateAxis = 0;
 
+  Button raiseLift = new JoystickButton(stick, 10);
+  Button lowerLift = new JoystickButton(stick, 20);
   Button deployClaw = new JoystickButton(stick, 1);
   Button retractClaw = new JoystickButton(stick, 2);
+
+
 
   public OI(){
     deployClaw.whenPressed(new DeployClaw());

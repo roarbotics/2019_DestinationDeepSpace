@@ -30,8 +30,8 @@ public class DeployClaw extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    System.out.println("Deploying claw");
     Robot.m_claw.clawSolenoid.set(DoubleSolenoid.Value.kForward);
-    System.out.println("Deploy Claw");
   }
 
   // Make this return true when this Command no longer needs to run execute()
