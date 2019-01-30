@@ -9,7 +9,6 @@ package frc.robot;
 
 import com.kauailabs.navx.frc.AHRS;
 
-import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -23,6 +22,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.commands.ArcadeDrive;
 import frc.robot.subsystems.Camera;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Drivetrain;
@@ -70,11 +70,12 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     m_oi = new OI();
 
-    UsbCamera camera = new UsbCamera("cam0",0);
-    camera.setFPS(15);
-    camera.setResolution(320, 240);
+    //UsbCamera camera = new UsbCamera("cam0",0);
+    //camera.setFPS(15);
+    //camera.setResolution(320, 240);
 
-    CameraServer.getInstance().startAutomaticCapture(camera);
+    //CameraServer.getInstance().startAutomaticCapture(camera);
+    CameraServer.getInstance().startAutomaticCapture();
 
     builtInAccelerometer = new BuiltInAccelerometer();
 
@@ -123,12 +124,23 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Voltage", k_pdp.getVoltage());
     SmartDashboard.putNumber("Total Current", k_pdp.getTotalCurrent());
 
+    SmartDashboard.putNumber("Pressure", m_claw.getPressure());
+
+    if (ArcadeDrive.drive != null)
+      SmartDashboard.putData("Drivetrain", ArcadeDrive.drive);
+
+    if (m_oi.stick.getRawButton(3)){
+      m_drivetrain.leftEnc.reset();
+      m_drivetrain.rightEnc.reset();
+    }
+
     /**
      * Add all of the data to the network table.
      */
 
     if (ahrs != null) {
       angleMXPEntry.setDouble(ahrs.getAngle());
+      SmartDashboard.putData("Gyro", ahrs);
     }
 
     /*

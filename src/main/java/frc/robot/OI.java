@@ -28,8 +28,8 @@ public class OI {
 
   public Joystick stick = new Joystick(0);
 
-  public int moveAxis = 0;
-  public int rotateAxis = 1;
+  public int moveAxis = 1;
+  public int rotateAxis = 0;
 
   Button deployClaw = new JoystickButton(stick, 1);
   Button retractClaw = new JoystickButton(stick, 2);

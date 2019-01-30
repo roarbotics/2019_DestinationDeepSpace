@@ -16,7 +16,7 @@ import frc.robot.Robot;
  */
 public class ArcadeDrive extends Command {
 
-  DifferentialDrive drive;
+public static DifferentialDrive drive;
 
   public ArcadeDrive() {
     // Use requires() here to declare subsystem dependencies
@@ -26,16 +26,16 @@ public class ArcadeDrive extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.m_drivetrain.rightMotor.setInverted(true);
+    //Robot.m_drivetrain.rightMotor.setInverted(true);
     drive = new DifferentialDrive(Robot.m_drivetrain.leftMotor, Robot.m_drivetrain.rightMotor);
     drive.setSafetyEnabled(false);
-    drive.setRightSideInverted(false);
+    //drive.setRightSideInverted(true);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    drive.arcadeDrive(-Robot.m_oi.stick.getRawAxis(1), Robot.m_oi.stick.getRawAxis(2)/2);
+    drive.arcadeDrive(-Robot.m_oi.stick.getRawAxis(Robot.m_oi.moveAxis), Robot.m_oi.stick.getRawAxis(Robot.m_oi.rotateAxis));
   }
 
   // Make this return true when this Command no longer needs to run execute()

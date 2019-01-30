@@ -37,4 +37,8 @@ public class Claw extends Subsystem {
     setDefaultCommand(null);
   }
 
+  public double getPressure(){
+    return (250*(s_pressure.getVoltage()/5))-25;
+  }
+
 }
