@@ -7,18 +7,20 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
 /**
  * An example command. You can replace me with your own command.
  */
-public class LowerLift extends Command {
+public class Push extends Command {
 
 
-  public LowerLift() {
+  public Push() {
     // Use requires() here to declare subsystem dependencies
-    requires(Robot.m_lift);
+    requires(Robot.m_actuator);
   }
 
   // Called just before this Command runs the first time
@@ -29,21 +31,21 @@ public class LowerLift extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (Robot.m_lift.lowerLimit.get())
-      Robot.m_lift.liftMotor.set(-Robot.m_lift.speed);
+    System.out.println("Deploying claw");
+    Robot.m_actuator.clawSolenoid.set(DoubleSolenoid.Value.kForward);
+    Timer.delay(0.25);
+    Robot.m_actuator.clawSolenoid.set(DoubleSolenoid.Value.kReverse);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    //return Robot.m_lift.lowerLimit.get();
-    return Robot.m_lift.liftPot.get() < Robot.m_lift.lowPot;
+    return Robot.m_actuator.clawSolenoid.get().equals(DoubleSolenoid.Value.kReverse);
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.m_lift.liftMotor.set(0);
   }
 
   // Called when another command which requires one or more of the same

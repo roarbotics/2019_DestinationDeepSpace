@@ -9,7 +9,6 @@ package frc.robot;
 
 import com.kauailabs.navx.frc.AHRS;
 
-import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -23,9 +22,10 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.subsystems.Claw;
+import frc.robot.commands.ArcadeDrive;
+import frc.robot.commands.Deploy;
+import frc.robot.subsystems.Actuator;
 import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.Lift;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -36,8 +36,7 @@ import frc.robot.subsystems.Lift;
  */
 public class Robot extends TimedRobot {
   public static Drivetrain m_drivetrain = new Drivetrain();
-  public static Claw m_claw = new Claw();
-  public static Lift m_lift = new Lift();
+  public static Actuator m_actuator = new Actuator();
   public static OI m_oi;
 
   public static AHRS ahrs;
@@ -54,7 +53,7 @@ public class Robot extends TimedRobot {
   public static PowerDistributionPanel k_pdp = new PowerDistributionPanel(5);
 
   public double getPressure() {
-    return (250 * (m_claw.s_pressure.getVoltage() / 5)) - 125;
+    return (250 * (m_actuator.s_pressure.getVoltage() / 5)) - 125;
   }
 
   Command m_autonomousCommand;
@@ -68,11 +67,12 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     m_oi = new OI();
 
-    UsbCamera camera = new UsbCamera("cam0",0);
-    camera.setFPS(15);
-    camera.setResolution(320, 240);
+    //UsbCamera camera = new UsbCamera("cam0",0);
+    //camera.setFPS(15);
+    //camera.setResolution(320, 240);
 
-    CameraServer.getInstance().startAutomaticCapture(camera);
+    //CameraServer.getInstance().startAutomaticCapture(camera);
+    CameraServer.getInstance().startAutomaticCapture();
 
     builtInAccelerometer = new BuiltInAccelerometer();
 
@@ -121,12 +121,23 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Voltage", k_pdp.getVoltage());
     SmartDashboard.putNumber("Total Current", k_pdp.getTotalCurrent());
 
+    SmartDashboard.putNumber("Pressure", m_actuator.getPressure());
+
+    if (ArcadeDrive.drive != null)
+      SmartDashboard.putData("Drivetrain", ArcadeDrive.drive);
+
+    if (m_oi.stick.getRawButton(3)){
+      m_drivetrain.leftEnc.reset();
+      m_drivetrain.rightEnc.reset();
+    }
+
     /**
      * Add all of the data to the network table.
      */
 
     if (ahrs != null) {
       angleMXPEntry.setDouble(ahrs.getAngle());
+      SmartDashboard.putData("Gyro", ahrs);
     }
 
     /*
@@ -184,6 +195,8 @@ public class Robot extends TimedRobot {
      * ExampleCommand(); break; }
      */
 
+    m_autonomousCommand = new Deploy();
+
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.start();
@@ -216,7 +229,6 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
-
   }
 
   /**
