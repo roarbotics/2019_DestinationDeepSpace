@@ -10,8 +10,9 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import frc.robot.commands.DeployClaw;
-import frc.robot.commands.RetractClaw;
+import frc.robot.commands.Deploy;
+import frc.robot.commands.Push;
+import frc.robot.commands.Retract;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -31,16 +32,18 @@ public class OI {
   public int moveAxis = 1;
   public int rotateAxis = 0;
 
-  Button raiseLift = new JoystickButton(stick, 10);
-  Button lowerLift = new JoystickButton(stick, 20);
-  Button deployClaw = new JoystickButton(stick, 1);
-  Button retractClaw = new JoystickButton(stick, 2);
+  Button deploy = new JoystickButton(stick, 4);
+  Button retract = new JoystickButton(stick, 5);
+
+  Button push = new JoystickButton(stick, 1);
 
 
 
   public OI(){
-    deployClaw.whenPressed(new DeployClaw());
-    retractClaw.whenPressed(new RetractClaw());
+    push.whenPressed(new Push());
+
+    deploy.whenPressed(new Deploy());
+    retract.whenPressed(new Retract());
   }
 
 

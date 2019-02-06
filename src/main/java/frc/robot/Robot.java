@@ -23,9 +23,9 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ArcadeDrive;
-import frc.robot.subsystems.Claw;
+import frc.robot.commands.Deploy;
+import frc.robot.subsystems.Actuator;
 import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.Lift;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -36,8 +36,7 @@ import frc.robot.subsystems.Lift;
  */
 public class Robot extends TimedRobot {
   public static Drivetrain m_drivetrain = new Drivetrain();
-  public static Claw m_claw = new Claw();
-  public static Lift m_lift = new Lift();
+  public static Actuator m_actuator = new Actuator();
   public static OI m_oi;
 
   public static AHRS ahrs;
@@ -54,7 +53,7 @@ public class Robot extends TimedRobot {
   public static PowerDistributionPanel k_pdp = new PowerDistributionPanel(5);
 
   public double getPressure() {
-    return (250 * (m_claw.s_pressure.getVoltage() / 5)) - 125;
+    return (250 * (m_actuator.s_pressure.getVoltage() / 5)) - 125;
   }
 
   Command m_autonomousCommand;
@@ -122,7 +121,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Voltage", k_pdp.getVoltage());
     SmartDashboard.putNumber("Total Current", k_pdp.getTotalCurrent());
 
-    SmartDashboard.putNumber("Pressure", m_claw.getPressure());
+    SmartDashboard.putNumber("Pressure", m_actuator.getPressure());
 
     if (ArcadeDrive.drive != null)
       SmartDashboard.putData("Drivetrain", ArcadeDrive.drive);
@@ -196,6 +195,8 @@ public class Robot extends TimedRobot {
      * ExampleCommand(); break; }
      */
 
+    m_autonomousCommand = new Deploy();
+
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.start();
@@ -228,7 +229,6 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
-
   }
 
   /**

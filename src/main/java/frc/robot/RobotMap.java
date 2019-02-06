@@ -26,7 +26,8 @@ public class RobotMap {
   public static int rightDriveMotor0 = 0;
   public static int rightDriveMotor1 = 2;
 
-  public static int liftMotor = 4;
+  public static int leftActuator = 4;
+  public static int rightActuator = 5;
 
   // Digital Inputs
   public static int leftEncoder0 = 0;
@@ -38,7 +39,8 @@ public class RobotMap {
 
   // Analog Inputs
   public static int pressureSensor = 0;
-  public static int liftPot = 1;
+  public static int leftPot = 1;
+  public static int rightPot = 2;
 
   // PCM Ports
   public static int clawOpen = 0;

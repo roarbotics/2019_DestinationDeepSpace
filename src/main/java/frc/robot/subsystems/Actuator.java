@@ -7,17 +7,18 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
-import frc.robot.commands.DeployClaw;
 
 /**
  * An example subsystem.  You can replace me with your own Subsystem.
  */
-public class Claw extends Subsystem {
+public class Actuator extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
@@ -26,11 +27,28 @@ public class Claw extends Subsystem {
   public Compressor k_compressor;
 
   public AnalogInput s_pressure;
+  public AnalogInput leftDistance;
+  public AnalogInput rightDistance;
 
-  public Claw(){
+  public WPI_TalonSRX leftActuator;
+  public WPI_TalonSRX rightActuator;
+
+  public static int LEFT_MAX = 3000;
+  public static int RIGHT_MAX = 3000;
+
+  public static int LEFT_MIN = 500;
+  public static int RIGHT_MIN = 500;
+
+  public Actuator(){
     k_compressor = new Compressor();
     s_pressure = new AnalogInput(RobotMap.pressureSensor);
     clawSolenoid = new DoubleSolenoid(RobotMap.clawOpen, RobotMap.clawClose);
+
+    leftActuator = new WPI_TalonSRX(RobotMap.leftActuator);
+    rightActuator = new WPI_TalonSRX(RobotMap.rightActuator);
+
+    leftDistance = new AnalogInput(RobotMap.leftPot);
+    rightDistance = new AnalogInput(RobotMap.rightPot);
   }
 
   @Override

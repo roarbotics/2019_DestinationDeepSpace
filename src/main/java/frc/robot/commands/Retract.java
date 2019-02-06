@@ -7,18 +7,19 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.subsystems.Actuator;
 
 /**
  * An example command. You can replace me with your own command.
  */
-public class RaiseLift extends Command {
+public class Retract extends Command {
 
-
-  public RaiseLift() {
+  public Retract() {
     // Use requires() here to declare subsystem dependencies
-    requires(Robot.m_lift);
+    requires(Robot.m_actuator);
   }
 
   // Called just before this Command runs the first time
@@ -29,20 +30,24 @@ public class RaiseLift extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (Robot.m_lift.upperLimit.get())
-      Robot.m_lift.liftMotor.set(Robot.m_lift.speed);
+    if (Robot.m_actuator.leftDistance.getValue() > Actuator.LEFT_MIN)
+      Robot.m_actuator.leftActuator.set(-1);
+    if (Robot.m_actuator.rightDistance.getValue() > Actuator.RIGHT_MIN)
+      Robot.m_actuator.rightActuator.set(-1);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return Robot.m_lift.liftPot.get() > Robot.m_lift.highPot;
+    return ((Robot.m_actuator.rightDistance.getValue() < Actuator.RIGHT_MIN)
+        && (Robot.m_actuator.leftDistance.getValue() < Actuator.LEFT_MAX));
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.m_lift.liftMotor.set(0);
+    Robot.m_actuator.leftActuator.set(0);
+    Robot.m_actuator.rightActuator.set(0);
   }
 
   // Called when another command which requires one or more of the same
