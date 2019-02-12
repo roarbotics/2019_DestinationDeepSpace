@@ -14,12 +14,11 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.util.LightPacket;
-import frc.robot.util.Lightable;
 
 /**
  * An example subsystem. You can replace me with your own Subsystem.
  */
-public class Drivetrain extends Subsystem implements Lightable{
+public class Drivetrain extends Subsystem{
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
@@ -35,7 +34,6 @@ public class Drivetrain extends Subsystem implements Lightable{
   public Encoder rightEnc;
 
   public Drivetrain() {
-    lightPacket = new LightPacket();
 
 
     leftMotor = new WPI_TalonSRX(RobotMap.leftDriveMotor0);
@@ -68,10 +66,5 @@ public class Drivetrain extends Subsystem implements Lightable{
   public void initDefaultCommand() {
     setDefaultCommand(new ArcadeDrive());
   }
-
-  @Override
-  public LightPacket getPacket() {
-    return lightPacket;
-}
 
 }

@@ -31,16 +31,15 @@ public class Push extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    System.out.println("Deploying claw");
     Robot.m_pusher.clawSolenoid.set(DoubleSolenoid.Value.kForward);
-    Timer.delay(0.25);
-    Robot.m_pusher.clawSolenoid.set(DoubleSolenoid.Value.kReverse);
+    Robot.m_pusher.lightPacket.setColor(0, 255, 0);
+    Robot.m_pusher.lightPacket.setVelocity(0);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return Robot.m_pusher.clawSolenoid.get().equals(DoubleSolenoid.Value.kReverse);
+    return false;
   }
 
   // Called once after isFinished returns true

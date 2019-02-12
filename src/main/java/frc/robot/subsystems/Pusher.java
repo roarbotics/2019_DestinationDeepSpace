@@ -22,14 +22,14 @@ public class Pusher extends Subsystem implements Lightable{
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
-  LightPacket lightPacket;
+  public LightPacket lightPacket;
 
   public DoubleSolenoid clawSolenoid;
   public Compressor k_compressor;
   public AnalogInput s_pressure;
 
   public Pusher(){
-    lightPacket = new LightPacket();
+    lightPacket = new LightPacket(RobotMap.leftCylinderLightStart, RobotMap.rightCylinderLightStart+7);
 
     k_compressor = new Compressor();
     s_pressure = new AnalogInput(RobotMap.pressureSensor);

@@ -16,6 +16,14 @@ public class LightPacket {
     int[] color;
     int[] range;
 
+    public LightPacket(int[] r){
+        range = r;
+    }
+
+    public LightPacket(int l, int h){
+        setRange(l, h);
+    }
+
     public void setVelocity(int v){
         velocity = v;
     }

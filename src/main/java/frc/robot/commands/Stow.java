@@ -14,9 +14,9 @@ import frc.robot.subsystems.Actuator;
 /**
  * An example command. You can replace me with your own command.
  */
-public class Deploy extends Command {
+public class Stow extends Command {
 
-  public Deploy() {
+  public Stow() {
     // Use requires() here to declare subsystem dependencies
     requires(Robot.m_actuator);
   }
@@ -29,19 +29,19 @@ public class Deploy extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (Robot.m_actuator.leftDistance.getValue() < Actuator.LEFT_MAX)
-      Robot.m_actuator.leftActuator.set(1);
-    if (Robot.m_actuator.rightDistance.getValue() < Actuator.RIGHT_MAX)
-      Robot.m_actuator.rightActuator.set(1);
+    if (Robot.m_actuator.leftDistance.getValue() > Actuator.LEFT_MIN)
+      Robot.m_actuator.leftActuator.set(-1);
+    if (Robot.m_actuator.rightDistance.getValue() > Actuator.RIGHT_MIN)
+      Robot.m_actuator.rightActuator.set(-1);
 
     Robot.m_actuator.lightPacket.setColor(255, 0, 255);
-    Robot.m_actuator.lightPacket.setVelocity(1);
+    Robot.m_actuator.lightPacket.setVelocity(-1);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return ((Robot.m_actuator.rightDistance.getValue() < Actuator.RIGHT_MAX)
+    return ((Robot.m_actuator.rightDistance.getValue() < Actuator.RIGHT_MIN)
         && (Robot.m_actuator.leftDistance.getValue() < Actuator.LEFT_MAX));
   }
 
@@ -51,7 +51,7 @@ public class Deploy extends Command {
     Robot.m_actuator.leftActuator.set(0);
     Robot.m_actuator.rightActuator.set(0);
 
-    Robot.m_actuator.lightPacket.setColor(0, 255, 0);
+    Robot.m_actuator.lightPacket.setColor(255, 0, 0);
     Robot.m_actuator.lightPacket.setVelocity(0);
   }
 

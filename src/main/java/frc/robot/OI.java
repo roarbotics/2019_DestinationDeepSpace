@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.commands.Deploy;
 import frc.robot.commands.Push;
 import frc.robot.commands.Retract;
+import frc.robot.commands.Stow;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -41,9 +42,10 @@ public class OI {
 
   public OI(){
     push.whenPressed(new Push());
+    push.whenReleased(new Retract());
 
     deploy.whenPressed(new Deploy());
-    retract.whenPressed(new Retract());
+    retract.whenPressed(new Stow());
   }
 
 

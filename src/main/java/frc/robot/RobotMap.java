@@ -46,6 +46,12 @@ public class RobotMap {
   public static int clawOpen = 0;
   public static int clawClose = 1;
 
+  // Light Mappings
+  public static int leftActuatorLightStart = 0;
+  public static int rightActuatorLightStart = 8;
+  public static int leftCylinderLightStart = 16;
+  public static int rightCylinderLightStart = 24;
+
   // If you are using multiple modules, make sure to define both the port
   // number and the module. For example you with a rangefinder:
   // public static int rangefinderPort = 1;
