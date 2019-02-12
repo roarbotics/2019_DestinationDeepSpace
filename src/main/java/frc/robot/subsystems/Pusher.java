@@ -22,14 +22,16 @@ public class Pusher extends Subsystem implements Lightable{
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
-  public LightPacket lightPacket;
+  public LightPacket[] lightPackets;
 
   public DoubleSolenoid clawSolenoid;
   public Compressor k_compressor;
   public AnalogInput s_pressure;
 
   public Pusher(){
-    lightPacket = new LightPacket(RobotMap.leftCylinderLightStart, RobotMap.rightCylinderLightStart+7);
+    lightPackets = new LightPacket[2];
+    lightPackets[0]= new LightPacket(RobotMap.leftCylinderLightStart, RobotMap.leftCylinderLightStart+7);
+    lightPackets[0]= new LightPacket(RobotMap.rightCylinderLightStart, RobotMap.rightCylinderLightStart+7);
 
     k_compressor = new Compressor();
     s_pressure = new AnalogInput(RobotMap.pressureSensor);
@@ -47,7 +49,7 @@ public class Pusher extends Subsystem implements Lightable{
   }
 
   @Override
-  public LightPacket getPacket() {
-    return lightPacket;
+  public LightPacket[] getPackets() {
+    return lightPackets;
 }
 }

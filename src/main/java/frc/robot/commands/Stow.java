@@ -33,9 +33,12 @@ public class Stow extends Command {
       Robot.m_actuator.leftActuator.set(-1);
     if (Robot.m_actuator.rightDistance.getValue() > Actuator.RIGHT_MIN)
       Robot.m_actuator.rightActuator.set(-1);
+    
+    Robot.m_actuator.lightPackets[0].setColor(255, 0, 255);
+    Robot.m_actuator.lightPackets[0].setVelocity(-1);
 
-    Robot.m_actuator.lightPacket.setColor(255, 0, 255);
-    Robot.m_actuator.lightPacket.setVelocity(-1);
+    Robot.m_actuator.lightPackets[1].setColor(255, 0, 255);
+    Robot.m_actuator.lightPackets[1].setVelocity(-1);
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -51,8 +54,11 @@ public class Stow extends Command {
     Robot.m_actuator.leftActuator.set(0);
     Robot.m_actuator.rightActuator.set(0);
 
-    Robot.m_actuator.lightPacket.setColor(255, 0, 0);
-    Robot.m_actuator.lightPacket.setVelocity(0);
+    Robot.m_actuator.lightPackets[0].setColor(255, 0, 0);
+    Robot.m_actuator.lightPackets[0].setVelocity(0);
+
+    Robot.m_actuator.lightPackets[1].setColor(255, 0, 0);
+    Robot.m_actuator.lightPackets[1].setVelocity(0);
   }
 
   // Called when another command which requires one or more of the same

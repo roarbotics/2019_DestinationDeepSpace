@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.util.LightPacket;
 import frc.robot.util.Lightable;
 
 public class WriteLights extends Command {
@@ -33,12 +34,14 @@ public class WriteLights extends Command {
   @Override
   protected void execute() {
     String dat = "";
-    for (Lightable light : Robot.m_lights.lightables){
-      dat += light.getPacket().getRangeDat() + ",";
-      dat += light.getPacket().getColorDat() + ",";
-      dat += light.getPacket().getVelocity() + "\n";
-      write(dat);
-      dat = "";
+    for (Lightable light : Robot.m_lights.lightables) {
+      for (LightPacket packet : light.getPackets()) {
+        dat += packet.getRangeDat() + ",";
+        dat += packet.getColorDat() + ",";
+        dat += packet.getVelocity() + "\n";
+        write(dat);
+        dat = "";
+      }
     }
   }
 

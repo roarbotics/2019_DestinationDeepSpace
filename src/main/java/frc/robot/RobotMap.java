@@ -48,8 +48,8 @@ public class RobotMap {
 
   // Light Mappings
   public static int leftActuatorLightStart = 0;
-  public static int rightActuatorLightStart = 8;
-  public static int leftCylinderLightStart = 16;
+  public static int rightActuatorLightStart = 16;
+  public static int leftCylinderLightStart = 8;
   public static int rightCylinderLightStart = 24;
 
   // If you are using multiple modules, make sure to define both the port

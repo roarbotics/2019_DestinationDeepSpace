@@ -26,8 +26,12 @@ public class Retract extends Command {
   @Override
   protected void execute() {
     Robot.m_pusher.clawSolenoid.set(DoubleSolenoid.Value.kReverse);
-    Robot.m_pusher.lightPacket.setColor(255, 0, 0);
-    Robot.m_pusher.lightPacket.setVelocity(0);
+
+    Robot.m_pusher.lightPackets[0].setColor(255, 0, 0);
+    Robot.m_pusher.lightPackets[0].setVelocity(0);
+
+    Robot.m_pusher.lightPackets[1].setColor(255, 0, 0);
+    Robot.m_pusher.lightPackets[1].setVelocity(0);
   }
 
   // Make this return true when this Command no longer needs to run execute()

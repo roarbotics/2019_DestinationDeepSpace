@@ -3,7 +3,7 @@
 
 #define PIN 6
 
-Adafruit_NeoPixel strip = Adafruit_NeoPixel(60, PIN, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel strip = Adafruit_NeoPixel(32, PIN, NEO_GRB + NEO_KHZ800);
 
 void setup() {
   Wire.begin(8);                // join i2c bus with address #8

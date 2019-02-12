@@ -12,6 +12,6 @@ package frc.robot.util;
  */
 public interface Lightable {
 
-    public LightPacket getPacket();
+    public LightPacket[] getPackets();
 
 }

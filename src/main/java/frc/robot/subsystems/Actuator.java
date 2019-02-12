@@ -22,7 +22,7 @@ public class Actuator extends Subsystem implements Lightable{
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
-  public LightPacket lightPacket;
+  public LightPacket[] lightPackets;
 
   public AnalogInput leftDistance;
   public AnalogInput rightDistance;
@@ -37,7 +37,9 @@ public class Actuator extends Subsystem implements Lightable{
   public static int RIGHT_MIN = 500;
 
   public Actuator(){
-    lightPacket = new LightPacket(RobotMap.leftActuatorLightStart, RobotMap.rightActuatorLightStart+7);
+    lightPackets = new LightPacket[2];
+    lightPackets[0]= new LightPacket(RobotMap.leftActuatorLightStart, RobotMap.leftActuatorLightStart+7);
+    lightPackets[1]= new LightPacket(RobotMap.rightActuatorLightStart, RobotMap.rightCylinderLightStart+7);
 
     leftActuator = new WPI_TalonSRX(RobotMap.leftActuator);
     rightActuator = new WPI_TalonSRX(RobotMap.rightActuator);
@@ -52,8 +54,8 @@ public class Actuator extends Subsystem implements Lightable{
   }
 
   @Override
-  public LightPacket getPacket() {
-    return lightPacket;
+  public LightPacket[] getPackets() {
+    return lightPackets;
 }
 
 }
