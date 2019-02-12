@@ -71,6 +71,9 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     m_oi = new OI();
 
+    m_lights.addLightable(m_actuator);
+    m_lights.addLightable(m_pusher);
+
     //UsbCamera camera = new UsbCamera("cam0",0);
     //camera.setFPS(15);
     //camera.setResolution(320, 240);

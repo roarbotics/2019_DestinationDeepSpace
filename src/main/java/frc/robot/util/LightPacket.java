@@ -47,7 +47,7 @@ public class LightPacket {
         return color;
     }
 
-    public String getColorDat(){
+    public String getColorDat(){ //These are GRB, not RGB
         String s = "";
         s += color[0] + ".";
         s += color[1] + ".";
