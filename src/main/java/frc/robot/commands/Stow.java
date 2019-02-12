@@ -42,7 +42,7 @@ public class Stow extends Command {
   @Override
   protected boolean isFinished() {
     return ((Robot.m_actuator.rightDistance.getValue() < Actuator.RIGHT_MIN)
-        && (Robot.m_actuator.leftDistance.getValue() < Actuator.LEFT_MAX));
+        && (Robot.m_actuator.leftDistance.getValue() < Actuator.LEFT_MIN));
   }
 
   // Called once after isFinished returns true

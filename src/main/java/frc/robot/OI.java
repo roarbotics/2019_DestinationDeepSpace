@@ -34,7 +34,7 @@ public class OI {
   public int rotateAxis = 0;
 
   Button deploy = new JoystickButton(stick, 4);
-  Button retract = new JoystickButton(stick, 5);
+  Button stow = new JoystickButton(stick, 5);
 
   Button push = new JoystickButton(stick, 1);
 
@@ -45,7 +45,7 @@ public class OI {
     push.whenReleased(new Retract());
 
     deploy.whenPressed(new Deploy());
-    retract.whenPressed(new Stow());
+    stow.whenPressed(new Stow());
   }
 
 
