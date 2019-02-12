@@ -26,6 +26,7 @@ import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.Deploy;
 import frc.robot.subsystems.Actuator;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Lights;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -38,6 +39,7 @@ public class Robot extends TimedRobot {
   public static Drivetrain m_drivetrain = new Drivetrain();
   public static Actuator m_actuator = new Actuator();
   public static OI m_oi;
+  public static Lights m_lights = new Lights();
 
   public static AHRS ahrs;
   BuiltInAccelerometer builtInAccelerometer;
