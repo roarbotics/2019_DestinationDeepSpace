@@ -28,9 +28,9 @@ public class LightPacket {
         velocity = v;
     }
 
-    public void setColor(int r, int g, int b){
-        color[0] = r;
-        color[1] = g;
+    public void setColor(int g, int r, int b){
+        color[0] = g;
+        color[1] = r;
         color[2] = b;
     }
 
