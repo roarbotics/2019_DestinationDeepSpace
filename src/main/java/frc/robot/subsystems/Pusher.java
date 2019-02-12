@@ -1,5 +1,5 @@
 /*----------------------------------------------------------------------------*/
-/* Copyright (c) 2017-2018 FIRST. All Rights Reserved.                        */
+/* Copyright (c) 2018 FIRST. All Rights Reserved.                             */
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
@@ -7,53 +7,47 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
 import frc.robot.util.LightPacket;
 import frc.robot.util.Lightable;
 
 /**
- * An example subsystem.  You can replace me with your own Subsystem.
+ * Add your docs here.
  */
-public class Actuator extends Subsystem implements Lightable{
+public class Pusher extends Subsystem implements Lightable{
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
   LightPacket lightPacket;
 
-  public AnalogInput leftDistance;
-  public AnalogInput rightDistance;
+  public DoubleSolenoid clawSolenoid;
+  public Compressor k_compressor;
+  public AnalogInput s_pressure;
 
-  public WPI_TalonSRX leftActuator;
-  public WPI_TalonSRX rightActuator;
-
-  public static int LEFT_MAX = 3000;
-  public static int RIGHT_MAX = 3000;
-
-  public static int LEFT_MIN = 500;
-  public static int RIGHT_MIN = 500;
-
-  public Actuator(){
+  public Pusher(){
     lightPacket = new LightPacket();
 
-    leftActuator = new WPI_TalonSRX(RobotMap.leftActuator);
-    rightActuator = new WPI_TalonSRX(RobotMap.rightActuator);
-
-    leftDistance = new AnalogInput(RobotMap.leftPot);
-    rightDistance = new AnalogInput(RobotMap.rightPot);
+    k_compressor = new Compressor();
+    s_pressure = new AnalogInput(RobotMap.pressureSensor);
+    clawSolenoid = new DoubleSolenoid(RobotMap.clawOpen, RobotMap.clawClose);
   }
 
   @Override
   public void initDefaultCommand() {
-    setDefaultCommand(null);
+    // Set the default command for a subsystem here.
+    // setDefaultCommand(new MySpecialCommand());
+  }
+
+  public double getPressure(){
+    return (250 * (s_pressure.getVoltage() / 5)) - 25;
   }
 
   @Override
   public LightPacket getPacket() {
     return lightPacket;
 }
-
 }

@@ -27,6 +27,7 @@ import frc.robot.commands.Deploy;
 import frc.robot.subsystems.Actuator;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Lights;
+import frc.robot.subsystems.Pusher;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -38,6 +39,7 @@ import frc.robot.subsystems.Lights;
 public class Robot extends TimedRobot {
   public static Drivetrain m_drivetrain = new Drivetrain();
   public static Actuator m_actuator = new Actuator();
+  public static Pusher m_pusher = new Pusher();
   public static OI m_oi;
   public static Lights m_lights = new Lights();
 
@@ -55,7 +57,7 @@ public class Robot extends TimedRobot {
   public static PowerDistributionPanel k_pdp = new PowerDistributionPanel(5);
 
   public double getPressure() {
-    return (250 * (m_actuator.s_pressure.getVoltage() / 5)) - 125;
+    return (250 * (m_pusher.s_pressure.getVoltage() / 5)) - 125;
   }
 
   Command m_autonomousCommand;
@@ -123,7 +125,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Voltage", k_pdp.getVoltage());
     SmartDashboard.putNumber("Total Current", k_pdp.getTotalCurrent());
 
-    SmartDashboard.putNumber("Pressure", m_actuator.getPressure());
+    SmartDashboard.putNumber("Pressure", m_pusher.getPressure());
 
     if (ArcadeDrive.drive != null)
       SmartDashboard.putData("Drivetrain", ArcadeDrive.drive);

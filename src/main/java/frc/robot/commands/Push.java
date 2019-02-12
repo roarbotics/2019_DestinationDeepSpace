@@ -20,7 +20,7 @@ public class Push extends Command {
 
   public Push() {
     // Use requires() here to declare subsystem dependencies
-    requires(Robot.m_actuator);
+    requires(Robot.m_pusher);
   }
 
   // Called just before this Command runs the first time
@@ -32,15 +32,15 @@ public class Push extends Command {
   @Override
   protected void execute() {
     System.out.println("Deploying claw");
-    Robot.m_actuator.clawSolenoid.set(DoubleSolenoid.Value.kForward);
+    Robot.m_pusher.clawSolenoid.set(DoubleSolenoid.Value.kForward);
     Timer.delay(0.25);
-    Robot.m_actuator.clawSolenoid.set(DoubleSolenoid.Value.kReverse);
+    Robot.m_pusher.clawSolenoid.set(DoubleSolenoid.Value.kReverse);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return Robot.m_actuator.clawSolenoid.get().equals(DoubleSolenoid.Value.kReverse);
+    return Robot.m_pusher.clawSolenoid.get().equals(DoubleSolenoid.Value.kReverse);
   }
 
   // Called once after isFinished returns true
