@@ -30,9 +30,11 @@ public class Deploy extends Command {
   @Override
   protected void execute() {
     if (Robot.m_actuator.leftDistance.getValue() < Actuator.LEFT_MAX)
-      Robot.m_actuator.leftActuator.set(1);
+      Robot.m_actuator.leftActuator.set(.1);
     if (Robot.m_actuator.rightDistance.getValue() < Actuator.RIGHT_MAX)
-      Robot.m_actuator.rightActuator.set(1);
+      Robot.m_actuator.rightActuator.set(.1);
+
+    System.out.println(Robot.m_actuator.leftDistance.getValue());
 
     Robot.m_actuator.lightPacket.setColor(255, 0, 255);
     Robot.m_actuator.lightPacket.setVelocity(1);
@@ -41,8 +43,8 @@ public class Deploy extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return ((Robot.m_actuator.rightDistance.getValue() < Actuator.RIGHT_MAX)
-        && (Robot.m_actuator.leftDistance.getValue() < Actuator.LEFT_MAX));
+    return ((Robot.m_actuator.rightDistance.getValue() > Actuator.RIGHT_MAX)
+        && (Robot.m_actuator.leftDistance.getValue() > Actuator.LEFT_MAX));
   }
 
   // Called once after isFinished returns true

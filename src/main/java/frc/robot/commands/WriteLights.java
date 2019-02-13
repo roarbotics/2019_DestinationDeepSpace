@@ -34,6 +34,7 @@ public class WriteLights extends Command {
   protected void execute() {
     String dat = "";
     for (Lightable light : Robot.m_lights.lightables){
+      //System.out.println("writing light " + light.getPacket().getRangeDat());
       dat += light.getPacket().getRangeDat() + ",";
       dat += light.getPacket().getColorDat() + ",";
       dat += light.getPacket().getVelocity() + "\n";
@@ -65,6 +66,6 @@ public class WriteLights extends Command {
     for (int i = 0; i < CharArray.length; i++) {
       WriteData[i] = (byte) CharArray[i];
     }
-    wire.transaction(WriteData, WriteData.length, null, 0);
+    wire.transaction(WriteData, WriteData.length, new byte[0], 0);
   }
 }
