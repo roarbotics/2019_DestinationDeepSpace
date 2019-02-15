@@ -6,7 +6,7 @@
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(32, PIN, NEO_GRB + NEO_KHZ800);
 
 void setup() {
-  Wire.begin(8);                // join i2c bus with address #8
+  Wire.begin(4);                // join i2c bus with address #8
   Wire.onReceive(receiveEvent); // register event
   Serial.begin(9600);           // start serial for output
 
@@ -21,32 +21,88 @@ void loop() {
 // function that executes whenever data is received from master
 // this function is registered as an event, see setup()
 void receiveEvent(int howMany) {
+  
   char dat[howMany + 1];
   dat[howMany] = 0;
 
   int i = 0;
 
   while (1 < Wire.available()) { // loop through all but the last
-    dat[i] = Wire.read(); // receive byte as a character
+    char c = Wire.read(); // receive byte as a character
+    //Serial.print(c);         // print the character
+    dat[i] = c;
     i++;
   }
+  int x = Wire.read();    // receive byte as an integer
+  //Serial.println(s);         // print the integer
 
-  char* command = strtok(dat, ",");
-  while (command != 0)
-  {
-    // Split the command in two values
-    char* separator = strchr(command, ':');
-    if (separator != 0)
-    {
-      // Actually split the string in 2: replace ':' with 0
-      *separator = 0;
-      int servoId = atoi(command);
-      ++separator;
-      int position = atoi(separator);
-
-      // Do something with servoId and position
-    }
-    // Find the next command in input string
-    command = strtok(0, "&");
+  String message[3];
+  char *p = dat;
+  char *str;
+  int z = 0;
+  
+  while ((str = strtok_r(p, ",", &p)) != NULL){
+    Serial.println(z);
+    message[z++] = str;
   }
+
+  char lbuf[sizeof(message[0])];
+  message[0].toCharArray(lbuf, sizeof(lbuf));
+  char *lq = lbuf;
+  char *lsub;
+  int l = 0;
+
+  int range[2];
+  while ((lsub = strtok(lq, ".", &lq)) != NULL){
+    range[l] = atoi(lsub);
+    l++;
+  }
+
+  //Serial.print(range[1]);
+  //Serial.println(range[0]);
+
+  Serial.println(message[1]);
+  //Serial.println(sizeof(message[1])+1);
+
+  
+  char cbuf[sizeof(message[1])+1];
+  cbuf[sizeof(message[1])] = 0;
+  
+  message[1].toCharArray(cbuf, sizeof(cbuf));
+  char *cq = cbuf;
+  char *csub;
+  int c = 0;
+
+  String grb[3];
+  while ((csub = strtok(cq, ".", &cq)) != NULL){
+    //Serial.print(csub);
+    //Serial.print(", ");
+    grb[c] = csub;//atoi(csub);
+    //Serial.println(grb[c]);
+    Serial.println(c);
+    c++;
+  }
+
+  //Serial.println(message[1]);
+
+  for(int i=range[0];i<range[1];i++){
+
+    // pixels.Color takes RGB values, from 0,0,0 up to 255,255,255
+    /*
+    //Serial.print(range[1]);
+    //Serial.print(range[0]);
+    
+    Serial.print(grb[0]);
+    Serial.print(", ");
+    Serial.print(grb[1]);
+    Serial.print(", ");
+    Serial.println(grb[2]);
+    */
+    
+    
+    strip.setPixelColor(i, strip.Color(grb[1].toInt(), grb[0].toInt(), grb[2].toInt()));
+    strip.show();
+    delay(2);
+  }
+
 }

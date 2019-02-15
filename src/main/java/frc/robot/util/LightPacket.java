@@ -14,14 +14,10 @@ public class LightPacket {
 
     int velocity;
     int[] color;
-    int[] range;
+    int pos;
 
-    public LightPacket(int[] r){
-        range = r;
-    }
-
-    public LightPacket(int l, int h){
-        setRange(l, h);
+    public LightPacket(int p){
+        pos = p;
     }
 
     public void setVelocity(int v){
@@ -34,9 +30,8 @@ public class LightPacket {
         color[2] = b;
     }
 
-    public void setRange(int l, int h){
-        range[0] = l;
-        range[1] = h;
+    public void setPos(int p){
+        pos = p;
     }
 
     public int getVelocity(){
@@ -49,20 +44,17 @@ public class LightPacket {
 
     public String getColorDat(){ //These are GRB, not RGB
         String s = "";
-        s += color[0] + ".";
-        s += color[1] + ".";
+        s += color[0] + ",";
+        s += color[1] + ",";
         s += color[2];
         return s;
     }
 
-    public int[] getRange(){
-        return range;
+    public int getPos(){
+        return pos;
     }
 
     public String getRangeDat(){
-        String s = "";
-        s += range[0] + ".";
-        s += range[1];
-        return s;
+        return "" + pos;
     }
 }

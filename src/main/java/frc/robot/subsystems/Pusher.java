@@ -30,8 +30,14 @@ public class Pusher extends Subsystem implements Lightable{
 
   public Pusher(){
     lightPackets = new LightPacket[2];
-    lightPackets[0]= new LightPacket(RobotMap.leftCylinderLightStart, RobotMap.leftCylinderLightStart+7);
-    lightPackets[0]= new LightPacket(RobotMap.rightCylinderLightStart, RobotMap.rightCylinderLightStart+7);
+    lightPackets[0]= new LightPacket(RobotMap.leftCylinderLightStart);
+    lightPackets[0]= new LightPacket(RobotMap.rightCylinderLightStart);
+
+    lightPackets[0].setColor(0, 255, 0);
+    lightPackets[0].setVelocity(0);
+
+    lightPackets[1].setColor(0, 255, 0);
+    lightPackets[1].setVelocity(0);
 
     k_compressor = new Compressor();
     s_pressure = new AnalogInput(RobotMap.pressureSensor);

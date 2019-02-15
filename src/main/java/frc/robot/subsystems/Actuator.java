@@ -38,8 +38,8 @@ public class Actuator extends Subsystem implements Lightable{
 
   public Actuator(){
     lightPackets = new LightPacket[2];
-    lightPackets[0]= new LightPacket(RobotMap.leftActuatorLightStart, RobotMap.leftActuatorLightStart+7);
-    lightPackets[1]= new LightPacket(RobotMap.rightActuatorLightStart, RobotMap.rightCylinderLightStart+7);
+    lightPackets[0]= new LightPacket(RobotMap.leftActuatorLightStart);
+    lightPackets[1]= new LightPacket(RobotMap.rightActuatorLightStart);
 
     leftActuator = new WPI_TalonSRX(RobotMap.leftActuator);
     rightActuator = new WPI_TalonSRX(RobotMap.rightActuator);

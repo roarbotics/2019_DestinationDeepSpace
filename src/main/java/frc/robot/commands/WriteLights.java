@@ -36,9 +36,9 @@ public class WriteLights extends Command {
     String dat = "";
     for (Lightable light : Robot.m_lights.lightables) {
       for (LightPacket packet : light.getPackets()) {
-        dat += packet.getRangeDat() + ",";
+        dat += packet.getPos() + ",";
         dat += packet.getColorDat() + ",";
-        dat += packet.getVelocity() + "\n";
+        dat += packet.getVelocity();
         write(dat);
         dat = "";
       }

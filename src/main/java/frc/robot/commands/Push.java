@@ -32,10 +32,10 @@ public class Push extends Command {
   protected void execute() {
     Robot.m_pusher.clawSolenoid.set(DoubleSolenoid.Value.kForward);
     
-    Robot.m_pusher.lightPackets[0].setColor(0, 255, 0);
+    Robot.m_pusher.lightPackets[0].setColor(255, 0, 0);
     Robot.m_pusher.lightPackets[0].setVelocity(0);
 
-    Robot.m_pusher.lightPackets[1].setColor(0, 255, 0);
+    Robot.m_pusher.lightPackets[1].setColor(255, 0, 0);
     Robot.m_pusher.lightPackets[1].setVelocity(0);
   }
 
