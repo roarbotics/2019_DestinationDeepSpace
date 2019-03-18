@@ -42,9 +42,37 @@ void receiveEvent(int howMany) {
   int z = 0;
   
   while ((str = strtok_r(p, ",", &p)) != NULL){
-    Serial.println(z);
+    //Serial.println(z);
     message[z++] = str;
   }
+
+  //Serial.println(message[1]);
+  
+  char cbuf[message[1].length()+1];
+  cbuf[message[1].length()] = 0;
+
+  message[1].toCharArray(cbuf, sizeof(cbuf));
+  char *cq = cbuf;
+  char *csub;
+  int c = 0;
+
+  String grb[3];
+
+  
+  while ((csub = strtok_r(cq, ".", &cq)) != NULL){
+    //Serial.println(csub);
+    //Serial.print(", ");
+    grb[c] = csub;//atoi(csub);
+    //Serial.println(grb[c]);
+    Serial.println(c);
+    c++;
+  }
+  /*
+  while ((csub = strtok_r(cq, ".", &cq))) 
+        Serial.println(csub);
+        */
+
+  
 
   char lbuf[sizeof(message[0])];
   message[0].toCharArray(lbuf, sizeof(lbuf));
@@ -53,7 +81,7 @@ void receiveEvent(int howMany) {
   int l = 0;
 
   int range[2];
-  while ((lsub = strtok(lq, ".", &lq)) != NULL){
+  while ((lsub = strtok_r(lq, ".", &lq)) != NULL){
     range[l] = atoi(lsub);
     l++;
   }
@@ -61,27 +89,8 @@ void receiveEvent(int howMany) {
   //Serial.print(range[1]);
   //Serial.println(range[0]);
 
-  Serial.println(message[1]);
+  
   //Serial.println(sizeof(message[1])+1);
-
-  
-  char cbuf[sizeof(message[1])+1];
-  cbuf[sizeof(message[1])] = 0;
-  
-  message[1].toCharArray(cbuf, sizeof(cbuf));
-  char *cq = cbuf;
-  char *csub;
-  int c = 0;
-
-  String grb[3];
-  while ((csub = strtok(cq, ".", &cq)) != NULL){
-    //Serial.print(csub);
-    //Serial.print(", ");
-    grb[c] = csub;//atoi(csub);
-    //Serial.println(grb[c]);
-    Serial.println(c);
-    c++;
-  }
 
   //Serial.println(message[1]);
 

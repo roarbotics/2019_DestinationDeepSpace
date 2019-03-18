@@ -68,6 +68,6 @@ public class WriteLights extends Command {
     for (int i = 0; i < CharArray.length; i++) {
       WriteData[i] = (byte) CharArray[i];
     }
-    wire.transaction(WriteData, WriteData.length, null, 0);
+    wire.transaction(WriteData, WriteData.length, new byte[0], 0);
   }
 }

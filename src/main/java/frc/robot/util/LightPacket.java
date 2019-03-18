@@ -12,9 +12,9 @@ package frc.robot.util;
  */
 public class LightPacket {
 
-    int velocity;
-    int[] color;
-    int pos;
+    int velocity = 0;
+    int[] color = new int[3];
+    int pos = 0;
 
     public LightPacket(int p){
         pos = p;

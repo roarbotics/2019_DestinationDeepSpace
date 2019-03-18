@@ -44,6 +44,11 @@ public class Actuator extends Subsystem implements Lightable{
     leftActuator = new WPI_TalonSRX(RobotMap.leftActuator);
     rightActuator = new WPI_TalonSRX(RobotMap.rightActuator);
 
+    leftActuator.configContinuousCurrentLimit(1);
+    leftActuator.enableCurrentLimit(true);
+    rightActuator.configContinuousCurrentLimit(2);
+    rightActuator.enableCurrentLimit(true);
+
     leftDistance = new AnalogInput(RobotMap.leftPot);
     rightDistance = new AnalogInput(RobotMap.rightPot);
   }
